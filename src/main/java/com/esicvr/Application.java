@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 public class Application {
 
-	/* ESICVR - SISTEMA INFORMATIZADO PARA CONTROLE DE VENDA DE ROUPA */
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
