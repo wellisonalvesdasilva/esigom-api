@@ -32,6 +32,9 @@ public class Cliente implements Serializable {
 	@Column(name = "cpf")
 	private String cpf;
 
+	@Column(name = "email")
+	private String email;
+	
 	@Column(name = "data_nascimento")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataNascimento;
@@ -99,5 +102,19 @@ public class Cliente implements Serializable {
 	public void setDthInclusao(Date dthInclusao) {
 		this.dthInclusao = dthInclusao;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Set<Endereco> getEnderecos() {
+		return enderecos;
+	}
+	
+	
 
 }
