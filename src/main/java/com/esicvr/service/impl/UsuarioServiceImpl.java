@@ -24,7 +24,7 @@ import com.esicvr.domain.Usuario;
 import com.esicvr.repository.UsuarioRepository;
 import com.esicvr.service.UsuarioService;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
-import com.esicvr.service.dto.UserWithoutProfileDTO;
+import com.esicvr.service.dto.UsuarioPesquisaDTO;
 
 @Component
 public class UsuarioServiceImpl implements UsuarioService {
@@ -32,7 +32,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Autowired
 	UsuarioRepository _usuarioRepository;
 
-	public GenericoRetornoPaginadoDTO<UserWithoutProfileDTO> getAllPaginated(Map<String, String> parameters) {
+	public GenericoRetornoPaginadoDTO<UsuarioPesquisaDTO> getAllPaginated(Map<String, String> parameters) {
 
 		/* FILTROS */
 		Specification<Usuario> objPredicates = new Specification<Usuario>() {
@@ -65,10 +65,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 		/* BUSCAR E RETORNAR AO REST EM DTO */
 		Page<Usuario> listaEmEntidade = _usuarioRepository.findAll(objPredicates, paging);
-		GenericoRetornoPaginadoDTO<UserWithoutProfileDTO> retorno = new GenericoRetornoPaginadoDTO<UserWithoutProfileDTO>();
-		List<UserWithoutProfileDTO> listaDto = new ArrayList<UserWithoutProfileDTO>();
+		GenericoRetornoPaginadoDTO<UsuarioPesquisaDTO> retorno = new GenericoRetornoPaginadoDTO<UsuarioPesquisaDTO>();
+		List<UsuarioPesquisaDTO> listaDto = new ArrayList<UsuarioPesquisaDTO>();
 		for (Usuario item : listaEmEntidade) {
-			UserWithoutProfileDTO obj = new UserWithoutProfileDTO();
+			UsuarioPesquisaDTO obj = new UsuarioPesquisaDTO();
 			obj.setNome(item.getNome());
 			obj.setEmail(item.getEmail());
 			obj.setId(item.getId());

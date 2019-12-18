@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.esicvr.domain.Usuario;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
-import com.esicvr.service.dto.UserWithoutProfileDTO;
+import com.esicvr.service.dto.UsuarioPesquisaDTO;
 
 @Service
 public interface UsuarioService {
 
-	public GenericoRetornoPaginadoDTO<UserWithoutProfileDTO> getAllPaginated(Map<String, String> parameters);
+	public GenericoRetornoPaginadoDTO<UsuarioPesquisaDTO> getAllPaginated(Map<String, String> parameters);
 
 	public Usuario findUsuarioById(Integer id);
 

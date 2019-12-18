@@ -1,16 +1,27 @@
 package com.esicvr.service.impl;
-import java.util.HashSet;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import com.esicvr.domain.Cliente;
-import com.esicvr.domain.Endereco;
-import com.esicvr.domain.Telefone;
 import com.esicvr.repository.ClienteRepository;
-import com.esicvr.repository.EnderecoRepository;
-import com.esicvr.repository.TelefoneRepository;
 import com.esicvr.service.ClienteService;
+import com.esicvr.service.dto.ClientePesquisaDTO;
+import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
 
 @Component
 public class ClienteServiceImpl implements ClienteService {
@@ -18,40 +29,59 @@ public class ClienteServiceImpl implements ClienteService {
 	@Autowired
 	ClienteRepository _clienteRepository;
 
-	@Autowired
-	EnderecoRepository _enderecoRepository;
-
-	@Autowired
-	TelefoneRepository _telefoneRepository;
-
 	public Boolean save(Cliente entity) {
-
-		/* Gravar Endereço(s) */
-		HashSet<Endereco> listEnderecos = new HashSet<Endereco>();
-		for (Endereco item : entity.getEnderecos()) {
-			if (item.getId() == 0) {
-				listEnderecos.add(_enderecoRepository.save(item));
-			} else {
-				listEnderecos.add(item);
-			}
-		}
-		entity.setEnderecos(listEnderecos);
-
-		/* Gravar Telefone(s) */
-		HashSet<Telefone> listTelefones = new HashSet<Telefone>();
-		for (Telefone item : entity.getTelefones()) {
-			if (item.getId() == 0) {
-				listTelefones.add(_telefoneRepository.save(item));
-			} else {
-				listTelefones.add(item);
-			}
-		}
-		entity.setTelefones(listTelefones);
-
-		/* Gravar Entidade Cliente com Relacionamentos N x N */
 		if (_clienteRepository.save(entity) != null) {
 			return true;
 		}
 		return false;
+	}
+
+	public GenericoRetornoPaginadoDTO<ClientePesquisaDTO> getAllPaginated(Map<String, String> parameters) {
+
+		/* FILTROS */
+		Specification<Cliente> objPredicates = new Specification<Cliente>() {
+			public Predicate toPredicate(Root<Cliente> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+				List<Predicate> filtros = new ArrayList<Predicate>();
+				if (parameters.get("nome") != null && parameters.get("nome") != "") {
+					filtros.add(cb.like(root.get("nome"), "%" + parameters.get("nome") + "%"));
+				}
+				if (parameters.get("cpf") != null && parameters.get("cpf") != "") {
+					filtros.add(cb.equal(root.get("cpf"), parameters.get("cpf")));
+				}
+				if (parameters.get("email") != null && parameters.get("email") != "") {
+					filtros.add(cb.equal(root.get("email"), parameters.get("email")));
+				}
+
+				Predicate finalQuery = cb.and(filtros.toArray(new Predicate[filtros.size()]));
+				return finalQuery;
+			}
+		};
+
+		/* ORDER BY AND PAGINATION */
+		Sort sort = Sort.by(parameters.get("coluna"));
+		if (parameters.get("tipoOrdenacao").equals("asc")) {
+			sort = sort.ascending();
+		} else {
+			sort = sort.descending();
+		}
+		Pageable paging = PageRequest.of(Integer.parseInt(parameters.get("offset")),
+				Integer.parseInt(parameters.get("limit")), sort);
+
+		/* BUSCAR E RETORNAR AO REST EM DTO */
+		Page<Cliente> listaEmEntidade = _clienteRepository.findAll(objPredicates, paging);
+		GenericoRetornoPaginadoDTO<ClientePesquisaDTO> retorno = new GenericoRetornoPaginadoDTO<ClientePesquisaDTO>();
+		List<ClientePesquisaDTO> listaDto = new ArrayList<ClientePesquisaDTO>();
+		for (Cliente item : listaEmEntidade) {
+			ClientePesquisaDTO obj = new ClientePesquisaDTO();
+			obj.setId(item.getId());
+			obj.setCpf(item.getCpf());
+			obj.setNome(item.getNome());
+			obj.setEmail(item.getEmail());
+			obj.setDthInclusao(item.getDthInclusao());
+			listaDto.add(obj);
+		}
+		retorno.setLista(listaDto);
+		retorno.setRecordsTotal(listaEmEntidade.getTotalElements());
+		return retorno;
 	}
 }

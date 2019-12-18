@@ -2,7 +2,7 @@ package com.esicvr.service.dto;
 
 import java.util.Date;
 
-public class UserWithoutProfileDTO {
+public class UsuarioPesquisaDTO {
 	private Integer id;
 	private String nome;
 	private String login;

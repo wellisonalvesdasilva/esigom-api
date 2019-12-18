@@ -2,8 +2,9 @@ package com.esicvr.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,7 +35,7 @@ public class Cliente implements Serializable {
 
 	@Column(name = "email")
 	private String email;
-	
+
 	@Column(name = "data_nascimento")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataNascimento;
@@ -43,25 +44,13 @@ public class Cliente implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dthInclusao;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinTable(name = "cliente_telefone", joinColumns = @JoinColumn(name = "cliente_id"), inverseJoinColumns = @JoinColumn(name = "telefone_id"))
-	private Set<Telefone> telefones;
+	private List<Telefone> telefones;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinTable(name = "cliente_endereco", joinColumns = @JoinColumn(name = "cliente_id"), inverseJoinColumns = @JoinColumn(name = "endereco_id"))
 	private Set<Endereco> enderecos;
-
-	public Set<Telefone> getTelefones() {
-		return telefones;
-	}
-
-	public void setTelefones(Set<Telefone> telefones) {
-		this.telefones = telefones;
-	}
-
-	public void setEnderecos(Set<Endereco> enderecos) {
-		this.enderecos = enderecos;
-	}
 
 	public int getId() {
 		return id;
@@ -87,6 +76,14 @@ public class Cliente implements Serializable {
 		this.cpf = cpf;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public Date getDataNascimento() {
 		return dataNascimento;
 	}
@@ -103,18 +100,20 @@ public class Cliente implements Serializable {
 		this.dthInclusao = dthInclusao;
 	}
 
-	public String getEmail() {
-		return email;
+	public List<Telefone> getTelefones() {
+		return telefones;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setTelefones(List<Telefone> telefones) {
+		this.telefones = telefones;
 	}
 
 	public Set<Endereco> getEnderecos() {
 		return enderecos;
 	}
-	
-	
+
+	public void setEnderecos(Set<Endereco> enderecos) {
+		this.enderecos = enderecos;
+	}
 
 }

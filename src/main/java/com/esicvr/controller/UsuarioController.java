@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.esicvr.domain.Usuario;
 import com.esicvr.service.UsuarioService;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
-import com.esicvr.service.dto.UserWithoutProfileDTO;
+import com.esicvr.service.dto.UsuarioPesquisaDTO;
 
 @RestController
 @CrossOrigin
@@ -27,7 +27,7 @@ public class UsuarioController {
 	UsuarioService _usuarioService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public GenericoRetornoPaginadoDTO<UserWithoutProfileDTO> getAll(@RequestParam Map<String, String> parameters) {
+	public GenericoRetornoPaginadoDTO<UsuarioPesquisaDTO> getAll(@RequestParam Map<String, String> parameters) {
 		return _usuarioService.getAllPaginated(parameters);
 	}
 
