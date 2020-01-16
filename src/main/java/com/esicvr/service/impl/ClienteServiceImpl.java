@@ -18,6 +18,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import com.esicvr.domain.Cliente;
+import com.esicvr.domain.Perfil;
 import com.esicvr.repository.ClienteRepository;
 import com.esicvr.service.ClienteService;
 import com.esicvr.service.dto.ClientePesquisaDTO;
@@ -83,5 +84,32 @@ public class ClienteServiceImpl implements ClienteService {
 		retorno.setLista(listaDto);
 		retorno.setRecordsTotal(listaEmEntidade.getTotalElements());
 		return retorno;
+	}
+
+	public boolean delete(Integer id) {
+		Cliente p = _clienteRepository.findClienteById(id);
+		if (p != null) {
+			_clienteRepository.delete(p);
+			return true;
+		}
+		return false;
+	}
+
+	public boolean update(Integer id, Cliente dto) {
+		Cliente p = _clienteRepository.findClienteById(id);
+		if (p != null) {
+			p = dto;
+			_clienteRepository.save(p);
+			return true;
+		}
+		return false;
+	}
+
+	public Cliente findClienteById(Integer id) {
+		Cliente cliente = _clienteRepository.findClienteById(id);
+		if (cliente != null) {
+			return cliente;
+		}
+		return null;
 	}
 }

@@ -7,10 +7,13 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import com.esicvr.domain.Cliente;
+import com.esicvr.domain.Perfil;
 
 @Repository
 public interface ClienteRepository extends PagingAndSortingRepository<Cliente, Long> {
 	Page<Cliente> findAll(Specification<Cliente> spec, Pageable pageable);
 
 	Cliente findUsuarioById(Integer id);
+
+	Cliente findClienteById(Integer id);
 }
