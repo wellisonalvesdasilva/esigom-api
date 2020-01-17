@@ -1,6 +1,6 @@
 package com.esicvr.controller;
 
-import java.util.List;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,49 +12,44 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.esicvr.domain.Perfil;
-import com.esicvr.service.PerfilService;
+import com.esicvr.domain.Orcamento;
+import com.esicvr.service.OrcamentoService;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
-import com.esicvr.service.dto.PerfilPesquisaDTO;
+import com.esicvr.service.dto.OrcamentoPesquisaDTO;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/api/perfis")
-public class PerfilController {
+@RequestMapping(value = "/api/orcamentos")
+public class OrcamentoController {
 
 	@Autowired
-	PerfilService _perfilService;
+	OrcamentoService _orcamentoService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public GenericoRetornoPaginadoDTO<PerfilPesquisaDTO> getAll(@RequestParam Map<String, String> parameters) {
-		return _perfilService.getAllPaginated(parameters);
-	}
-
-	@RequestMapping(value = "/todos", method = RequestMethod.GET)
-	public List<Perfil> getAll() {
-		return _perfilService.findAll();
-	}
-
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Perfil> getById(@PathVariable(value = "id") Integer id) {
-		Perfil perfil = _perfilService.findPerfilById(id);
-		return ResponseEntity.ok().body(perfil);
+	public GenericoRetornoPaginadoDTO<OrcamentoPesquisaDTO> getAll(@RequestParam Map<String, String> parameters) {
+		return _orcamentoService.getAllPaginated(parameters);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public void created(@RequestBody Perfil dto) {
-		_perfilService.save(dto);
+	public void created(@RequestBody Orcamento orcamento) throws NoSuchAlgorithmException {
+		_orcamentoService.save(orcamento);
 	}
 
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Orcamento> getById(@PathVariable(value = "id") Integer id) {
+		Orcamento orcamento = _orcamentoService.findOrcamentoById(id);
+		return ResponseEntity.ok().body(orcamento);
+	}
+
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public void updatedById(@RequestBody Perfil dto, @PathVariable("id") Integer id) {
-		_perfilService.update(id, dto);
+	public void updatedById(@RequestBody Orcamento dto, @PathVariable("id") Integer id) {
+		_orcamentoService.update(id, dto);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public boolean deleteById(@PathVariable("id") Integer id) {
-		return _perfilService.delete(id);
+		return _orcamentoService.delete(id);
 	}
 
 }

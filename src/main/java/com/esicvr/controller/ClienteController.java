@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esicvr.domain.Cliente;
-import com.esicvr.domain.Perfil;
-import com.esicvr.domain.Usuario;
 import com.esicvr.service.ClienteService;
 import com.esicvr.service.dto.ClientePesquisaDTO;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
