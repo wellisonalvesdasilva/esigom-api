@@ -112,4 +112,13 @@ public class ClienteServiceImpl implements ClienteService {
 		}
 		return null;
 	}
+
+
+	public Cliente findClienteByCpf(String cpf) {
+		Cliente cliente = _clienteRepository.findClienteByCpf(cpf);
+		if (cliente != null) {
+			return cliente;
+		}
+		return null;
+	}
 }

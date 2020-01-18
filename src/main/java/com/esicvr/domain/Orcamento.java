@@ -68,11 +68,23 @@ public class Orcamento implements Serializable {
 	@JoinTable(name = "orcamento_servico", joinColumns = @JoinColumn(name = "orcamento_id"), inverseJoinColumns = @JoinColumn(name = "servico_id"))
 	private Set<Servico> servicos;
 
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "orcamento_forma_pagamento", joinColumns = @JoinColumn(name = "orcamento_id"), inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
+	private Set<FormaPagamento> formasPagamento;
+
 	@Column(name = "cod_status")
 	private Integer codStatus;
 
 	@Column(name = "forma_pagamento")
 	private Integer formaPagamento;
+
+	public Set<FormaPagamento> getFormasPagamento() {
+		return formasPagamento;
+	}
+
+	public void setFormasPagamento(Set<FormaPagamento> formasPagamento) {
+		this.formasPagamento = formasPagamento;
+	}
 
 	public int getId() {
 		return id;

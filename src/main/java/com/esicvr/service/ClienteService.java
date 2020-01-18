@@ -21,4 +21,6 @@ public interface ClienteService {
 
 	public Cliente findClienteById(Integer id);
 
+	public Cliente findClienteByCpf(String cpf);
+
 }

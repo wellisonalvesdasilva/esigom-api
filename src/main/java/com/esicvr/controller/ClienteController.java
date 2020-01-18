@@ -41,6 +41,14 @@ public class ClienteController {
 		Cliente cliente = _clienteService.findClienteById(id);
 		return ResponseEntity.ok().body(cliente);
 	}
+	
+	
+	@RequestMapping(value = "/getByCpf/{cpf}", method = RequestMethod.GET)
+	public ResponseEntity<Cliente> getByCpf(@PathVariable(value = "cpf") String cpf) {
+		Cliente cliente = _clienteService.findClienteByCpf(cpf);
+		return ResponseEntity.ok().body(cliente);
+	}
+
 
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)

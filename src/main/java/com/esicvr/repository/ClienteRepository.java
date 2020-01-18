@@ -16,4 +16,6 @@ public interface ClienteRepository extends PagingAndSortingRepository<Cliente, L
 	Cliente findUsuarioById(Integer id);
 
 	Cliente findClienteById(Integer id);
+
+	Cliente findClienteByCpf(String cpf);
 }
