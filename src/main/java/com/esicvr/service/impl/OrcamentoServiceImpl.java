@@ -69,7 +69,7 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 			obj.setId(item.getId());
 			obj.setCliente(item.getCliente().getNome());
 			obj.setCodStatus(item.getCodStatus());
-			obj.setDthInclusao(item.getData());
+			obj.setDthInclusao(item.getDataInclusao());
 			obj.setGerouOs(item.getGerouOs());
 			// TODO:
 			obj.setValorTotal("R$50.000,00");

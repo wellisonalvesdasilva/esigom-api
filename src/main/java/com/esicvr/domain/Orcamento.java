@@ -2,7 +2,6 @@ package com.esicvr.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -31,7 +30,7 @@ public class Orcamento implements Serializable {
 
 	@Column(name = "dth_inclusao")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date data;
+	private Date dataInclusao;
 
 	@Column(name = "veiculo_placa")
 	private String veiculoPlaca;
@@ -83,12 +82,12 @@ public class Orcamento implements Serializable {
 		this.id = id;
 	}
 
-	public Date getData() {
-		return data;
+	public Date getDataInclusao() {
+		return dataInclusao;
 	}
 
-	public void setData(Date data) {
-		this.data = data;
+	public void setDataInclusao(Date dataInclusao) {
+		this.dataInclusao = dataInclusao;
 	}
 
 	public String getVeiculoPlaca() {
