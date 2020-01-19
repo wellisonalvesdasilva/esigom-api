@@ -69,6 +69,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 			ProdutoPesquisaDTO obj = new ProdutoPesquisaDTO();
 			obj.setId(item.getId());
 			obj.setDescricao(item.getDescricao());
+			obj.setValor(item.getValor());
 			listaDto.add(obj);
 		}
 		retorno.setLista(listaDto);
@@ -108,5 +109,9 @@ public class ProdutoServiceImpl implements ProdutoService {
 			return peca;
 		}
 		return null;
+	}
+
+	public List<Produto> getAll() {
+		return _pecaRepository.findAll();
 	}
 }

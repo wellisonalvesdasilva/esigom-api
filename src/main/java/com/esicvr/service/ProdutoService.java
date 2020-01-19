@@ -1,5 +1,6 @@
 package com.esicvr.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -20,5 +21,7 @@ public interface ProdutoService {
 	public boolean update(Integer id, Produto dto);
 
 	public GenericoRetornoPaginadoDTO<ProdutoPesquisaDTO> getAllPaginated(Map<String, String> parameters);
+
+	public List<Produto> getAll();
 
 }

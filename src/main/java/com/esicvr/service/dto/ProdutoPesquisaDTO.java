@@ -3,6 +3,15 @@ package com.esicvr.service.dto;
 public class ProdutoPesquisaDTO {
 	private Integer id;
 	private String descricao;
+	private Double valor;
+	
+	public Double getValor() {
+		return valor;
+	}
+
+	public void setValor(Double valor) {
+		this.valor = valor;
+	}
 
 	public Integer getId() {
 		return id;

@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "produto")
 public class Produto implements Serializable {
@@ -21,6 +20,17 @@ public class Produto implements Serializable {
 
 	@Column(name = "descricao")
 	private String descricao;
+
+	@Column(name = "valor")
+	private Double valor;
+
+	public Double getValor() {
+		return valor;
+	}
+
+	public void setValor(Double valor) {
+		this.valor = valor;
+	}
 
 	public int getId() {
 		return id;

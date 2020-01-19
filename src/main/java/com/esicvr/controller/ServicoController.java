@@ -1,5 +1,6 @@
 package com.esicvr.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class ServicoController {
 	@RequestMapping(method = RequestMethod.GET)
 	public GenericoRetornoPaginadoDTO<ServicoPesquisaDTO> getAll(@RequestParam Map<String, String> parameters) {
 		return _servicoService.getAllPaginated(parameters);
+	}
+
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public List<Servico> getAll() {
+		return _servicoService.getAll();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

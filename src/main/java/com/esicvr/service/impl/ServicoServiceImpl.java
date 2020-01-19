@@ -69,6 +69,7 @@ public class ServicoServiceImpl implements ServicoService {
 			ServicoPesquisaDTO obj = new ServicoPesquisaDTO();
 			obj.setId(item.getId());
 			obj.setDescricao(item.getDescricao());
+			obj.setValor(item.getValor());
 			listaDto.add(obj);
 		}
 		retorno.setLista(listaDto);
@@ -108,5 +109,10 @@ public class ServicoServiceImpl implements ServicoService {
 			return servico;
 		}
 		return null;
+	}
+
+
+	public List<Servico> getAll() {
+		return _servicoRepository.findAll();
 	}
 }
