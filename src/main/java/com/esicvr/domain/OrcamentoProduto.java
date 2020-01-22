@@ -7,37 +7,37 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.ForeignKey;
 
 @Entity
 @Table(name = "orcamento_produto")
+
 public class OrcamentoProduto implements Serializable {
 
-	@Id
-	@Column(name = "orcamento_id")
-	private int orcamento_id;
+	private static final long serialVersionUID = 1735988645099904139L;
 
 	@Id
-	@Column(name = "produto_id")
-	private int produto_id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer id;
 
 	@Column(name = "quantidade")
 	private int quantidade;
 
-	public int getOrcamento_id() {
-		return orcamento_id;
+	@ManyToOne
+	@JoinColumn(name = "orcamento_id")
+	private Orcamento orcamento;
+
+	public Integer getId() {
+		return id;
 	}
 
-	public void setOrcamento_id(int orcamento_id) {
-		this.orcamento_id = orcamento_id;
-	}
-
-	public int getProduto_id() {
-		return produto_id;
-	}
-
-	public void setProduto_id(int produto_id) {
-		this.produto_id = produto_id;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public int getQuantidade() {
@@ -46,6 +46,18 @@ public class OrcamentoProduto implements Serializable {
 
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
+	}
+
+	public Orcamento getOrcamento() {
+		return orcamento;
+	}
+
+	public void setOrcamento(Orcamento orcamento) {
+		this.orcamento = orcamento;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

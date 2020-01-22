@@ -13,4 +13,5 @@ public interface OrcamentoRepository extends PagingAndSortingRepository<Orcament
 	Page<Orcamento> findAll(Specification<Orcamento> spec, Pageable pageable);
 
 	Orcamento findOrcamentoById(Integer id);
+
 }

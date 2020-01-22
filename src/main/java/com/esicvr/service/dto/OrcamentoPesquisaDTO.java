@@ -3,18 +3,18 @@ package com.esicvr.service.dto;
 import java.util.Date;
 
 public class OrcamentoPesquisaDTO {
-	private Integer id;
+	private int id;
 	private Date dthInclusao;
 	private Boolean gerouOs;
 	private String cliente;
 	private Integer codStatus;
 	private String valorTotal;
 
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

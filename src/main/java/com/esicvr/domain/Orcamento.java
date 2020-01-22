@@ -2,6 +2,7 @@ package com.esicvr.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,19 +15,24 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name = "orcamento")
 public class Orcamento implements Serializable {
 
+	private static final long serialVersionUID = -5420093706337344612L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private int id;
+	private Integer id;
 
 	@Column(name = "dth_inclusao")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -53,44 +59,29 @@ public class Orcamento implements Serializable {
 	@Column(name = "km")
 	private Integer km;
 
-	@Column(name = "gerou_os")
-	private Boolean gerouOs;
-
-	@ManyToOne
-	@JoinColumn(name = "cliente_id", insertable = false, updatable = false)
-	private Cliente cliente;
-
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "orcamento_produto", joinColumns = @JoinColumn(name = "orcamento_id"), inverseJoinColumns = @JoinColumn(name = "produto_id"))
-	private Set<Produto> produtos;
-
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "orcamento_servico", joinColumns = @JoinColumn(name = "orcamento_id"), inverseJoinColumns = @JoinColumn(name = "servico_id"))
-	private Set<Servico> servicos;
-
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "orcamento_forma_pagamento", joinColumns = @JoinColumn(name = "orcamento_id"), inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
-	private Set<FormaPagamento> formasPagamento;
-
 	@Column(name = "cod_status")
 	private Integer codStatus;
 
-	@Column(name = "forma_pagamento")
-	private Integer formaPagamento;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "orcamento_id")
+	private Set<OrcamentoProduto> produtos;
 
-	public Set<FormaPagamento> getFormasPagamento() {
-		return formasPagamento;
-	}
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "orcamento_id")
+	private Set<OrcamentoServico> servicos;
 
-	public void setFormasPagamento(Set<FormaPagamento> formasPagamento) {
-		this.formasPagamento = formasPagamento;
-	}
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "orcamento_forma_pagamento", joinColumns = @JoinColumn(name = "orcamento_id"), inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
+	private Set<FormaPagamento> formasPagamento;
 
-	public int getId() {
+	@OneToOne
+	private Cliente cliente;
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -158,12 +149,36 @@ public class Orcamento implements Serializable {
 		this.km = km;
 	}
 
-	public Boolean getGerouOs() {
-		return gerouOs;
+	public Integer getCodStatus() {
+		return codStatus;
 	}
 
-	public void setGerouOs(Boolean gerouOs) {
-		this.gerouOs = gerouOs;
+	public void setCodStatus(Integer codStatus) {
+		this.codStatus = codStatus;
+	}
+
+	public Set<OrcamentoProduto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(Set<OrcamentoProduto> produtos) {
+		this.produtos = produtos;
+	}
+
+	public Set<OrcamentoServico> getServicos() {
+		return servicos;
+	}
+
+	public void setServicos(Set<OrcamentoServico> servicos) {
+		this.servicos = servicos;
+	}
+
+	public Set<FormaPagamento> getFormasPagamento() {
+		return formasPagamento;
+	}
+
+	public void setFormasPagamento(Set<FormaPagamento> formasPagamento) {
+		this.formasPagamento = formasPagamento;
 	}
 
 	public Cliente getCliente() {
@@ -174,36 +189,8 @@ public class Orcamento implements Serializable {
 		this.cliente = cliente;
 	}
 
-	public Set<Produto> getProdutos() {
-		return produtos;
-	}
-
-	public void setProdutos(Set<Produto> produtos) {
-		this.produtos = produtos;
-	}
-
-	public Set<Servico> getServicos() {
-		return servicos;
-	}
-
-	public void setServicos(Set<Servico> servicos) {
-		this.servicos = servicos;
-	}
-
-	public Integer getCodStatus() {
-		return codStatus;
-	}
-
-	public void setCodStatus(Integer codStatus) {
-		this.codStatus = codStatus;
-	}
-
-	public Integer getFormaPagamento() {
-		return formaPagamento;
-	}
-
-	public void setFormaPagamento(Integer formaPagamento) {
-		this.formaPagamento = formaPagamento;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

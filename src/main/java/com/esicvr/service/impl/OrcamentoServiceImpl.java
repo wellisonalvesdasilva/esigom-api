@@ -1,6 +1,7 @@
 package com.esicvr.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import com.esicvr.domain.Orcamento;
+import com.esicvr.domain.OrcamentoProduto;
 import com.esicvr.repository.OrcamentoRepository;
 import com.esicvr.service.OrcamentoService;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
@@ -67,10 +70,9 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 		for (Orcamento item : listaEmEntidade) {
 			OrcamentoPesquisaDTO obj = new OrcamentoPesquisaDTO();
 			obj.setId(item.getId());
-			obj.setCliente(item.getCliente().getNome());
+			// obj.setCliente(item.getCliente().getNome());
 			obj.setCodStatus(item.getCodStatus());
 			obj.setDthInclusao(item.getDataInclusao());
-			obj.setGerouOs(item.getGerouOs());
 			// TODO:
 			obj.setValorTotal("R$50.000,00");
 			listaDto.add(obj);

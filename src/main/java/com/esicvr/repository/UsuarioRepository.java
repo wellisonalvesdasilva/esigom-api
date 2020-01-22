@@ -12,5 +12,6 @@ import com.esicvr.domain.Usuario;
 public interface UsuarioRepository extends PagingAndSortingRepository<Usuario, Long> {
 
 	Page<Usuario> findAll(Specification<Usuario> spec, Pageable pageable);
+
 	Usuario findUsuarioById(Integer id);
 }
