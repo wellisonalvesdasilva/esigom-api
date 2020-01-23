@@ -23,6 +23,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cascade;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "orcamento")
 public class Orcamento implements Serializable {
@@ -63,10 +65,13 @@ public class Orcamento implements Serializable {
 	private Integer codStatus;
 
 	@OneToMany(cascade = CascadeType.ALL)
+	@JsonManagedReference
 	@JoinColumn(name = "orcamento_id")
 	private Set<OrcamentoProduto> produtos;
 
 	@OneToMany(cascade = CascadeType.ALL)
+	// Envitar Looping Infinito
+	@JsonManagedReference
 	@JoinColumn(name = "orcamento_id")
 	private Set<OrcamentoServico> servicos;
 

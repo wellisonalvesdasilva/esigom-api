@@ -2,13 +2,15 @@ package com.esicvr.service.dto;
 
 import java.util.Date;
 
+import com.esicvr.domain.Cliente;
+
 public class OrcamentoPesquisaDTO {
 	private int id;
-	private Date dthInclusao;
-	private Boolean gerouOs;
-	private String cliente;
-	private Integer codStatus;
-	private String valorTotal;
+	private Date dataInclusao;
+	private String status;
+	private Cliente cliente;
+	private String valorFinal;
+	private String valorConta;
 
 	public int getId() {
 		return id;
@@ -18,44 +20,44 @@ public class OrcamentoPesquisaDTO {
 		this.id = id;
 	}
 
-	public Date getDthInclusao() {
-		return dthInclusao;
+	public Date getDataInclusao() {
+		return dataInclusao;
 	}
 
-	public void setDthInclusao(Date dthInclusao) {
-		this.dthInclusao = dthInclusao;
+	public void setDataInclusao(Date dataInclusao) {
+		this.dataInclusao = dataInclusao;
 	}
 
-	public Boolean getGerouOs() {
-		return gerouOs;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setGerouOs(Boolean gerouOs) {
-		this.gerouOs = gerouOs;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
-	public String getCliente() {
+	public Cliente getCliente() {
 		return cliente;
 	}
 
-	public void setCliente(String cliente) {
+	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
 
-	public Integer getCodStatus() {
-		return codStatus;
+	public String getValorFinal() {
+		return valorFinal;
 	}
 
-	public void setCodStatus(Integer codStatus) {
-		this.codStatus = codStatus;
+	public void setValorFinal(String valorFinal) {
+		this.valorFinal = valorFinal;
 	}
 
-	public String getValorTotal() {
-		return valorTotal;
+	public String getValorConta() {
+		return valorConta;
 	}
 
-	public void setValorTotal(String valorTotal) {
-		this.valorTotal = valorTotal;
+	public void setValorConta(String valorConta) {
+		this.valorConta = valorConta;
 	}
 
 }

@@ -70,11 +70,12 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 		for (Orcamento item : listaEmEntidade) {
 			OrcamentoPesquisaDTO obj = new OrcamentoPesquisaDTO();
 			obj.setId(item.getId());
-			// obj.setCliente(item.getCliente().getNome());
-			obj.setCodStatus(item.getCodStatus());
-			obj.setDthInclusao(item.getDataInclusao());
-			// TODO:
-			obj.setValorTotal("R$50.000,00");
+			obj.setCliente(item.getCliente());
+			obj.setStatus(retornarDescricaoStatus(item.getCodStatus()));
+			// TODO
+			obj.setDataInclusao(item.getDataInclusao());
+			obj.setValorConta("R$44.000,00");
+			obj.setValorFinal("R$50.000,00");
 			listaDto.add(obj);
 		}
 		retorno.setLista(listaDto);
@@ -114,5 +115,21 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 			return orcamento;
 		}
 		return null;
+	}
+
+	public String retornarDescricaoStatus(Integer codStatus) {
+		String descricaoStatus = null;
+		switch (codStatus) {
+		case 1:
+			descricaoStatus = "Aguardando Retorno";
+			break;
+		case 2:
+			descricaoStatus = "Aguardando Retorno";
+			break;
+		case 3:
+			descricaoStatus = "Cancelado";
+			break;
+		}
+		return descricaoStatus;
 	}
 }

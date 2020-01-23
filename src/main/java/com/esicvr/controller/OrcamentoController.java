@@ -4,6 +4,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +31,7 @@ public class OrcamentoController {
 		return _orcamentoService.getAllPaginated(parameters);
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public void created(@RequestBody Orcamento orcamento) throws NoSuchAlgorithmException {
 		_orcamentoService.save(orcamento);
 	}
@@ -41,7 +42,6 @@ public class OrcamentoController {
 		return ResponseEntity.ok().body(orcamento);
 	}
 
-	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public void updatedById(@RequestBody Orcamento dto, @PathVariable("id") Integer id) {
 		_orcamentoService.update(id, dto);
