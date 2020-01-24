@@ -11,6 +11,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,23 +26,22 @@ import com.esicvr.domain.OrdemServico;
 import com.esicvr.repository.OrcamentoRepository;
 import com.esicvr.repository.OrdemServicoRepository;
 import com.esicvr.service.OrcamentoService;
+import com.esicvr.service.OrdemServicoService;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
 import com.esicvr.service.dto.OrcamentoPesquisaDTO;
+import com.esicvr.service.dto.OrdemServicoPesquisaDTO;
 
 @Component
-public class OrcamentoServiceImpl implements OrcamentoService {
+public class OrdemServicoServiceImpl implements OrdemServicoService {
 
 	@Autowired
-	OrcamentoRepository _orcamentoRepository;
+	OrdemServicoRepository _orcamentoServicoRepository;
 
-	@Autowired
-	OrdemServicoRepository _ordemServicoRepository;
-
-	public GenericoRetornoPaginadoDTO<OrcamentoPesquisaDTO> getAllPaginated(Map<String, String> parameters) {
+	public GenericoRetornoPaginadoDTO<OrdemServicoPesquisaDTO> getAllPaginated(Map<String, String> parameters) {
 
 		/* FILTROS */
-		Specification<Orcamento> objPredicates = new Specification<Orcamento>() {
-			public Predicate toPredicate(Root<Orcamento> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+		Specification<OrdemServico> objPredicates = new Specification<OrdemServico>() {
+			public Predicate toPredicate(Root<OrdemServico> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
 				List<Predicate> filtros = new ArrayList<Predicate>();
 				if (parameters.get("nome") != null && parameters.get("nome") != "") {
 					filtros.add(cb.like(root.get("nome"), "%" + parameters.get("nome") + "%"));
@@ -69,18 +69,12 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 				Integer.parseInt(parameters.get("limit")), sort);
 
 		/* BUSCAR E RETORNAR AO REST EM DTO */
-		Page<Orcamento> listaEmEntidade = _orcamentoRepository.findAll(objPredicates, paging);
-		GenericoRetornoPaginadoDTO<OrcamentoPesquisaDTO> retorno = new GenericoRetornoPaginadoDTO<OrcamentoPesquisaDTO>();
-		List<OrcamentoPesquisaDTO> listaDto = new ArrayList<OrcamentoPesquisaDTO>();
-		for (Orcamento item : listaEmEntidade) {
-			OrcamentoPesquisaDTO obj = new OrcamentoPesquisaDTO();
-			obj.setId(item.getId());
-			obj.setCliente(item.getCliente());
-			obj.setStatus(retornarDescricaoStatus(item.getCodStatus()));
-			// TODO
-			obj.setDataInclusao(item.getDataInclusao());
-			obj.setValorConta("R$44.000,00");
-			obj.setValorFinal("R$50.000,00");
+		Page<OrdemServico> listaEmEntidade = _orcamentoServicoRepository.findAll(objPredicates, paging);
+		GenericoRetornoPaginadoDTO<OrdemServicoPesquisaDTO> retorno = new GenericoRetornoPaginadoDTO<OrdemServicoPesquisaDTO>();
+		List<OrdemServicoPesquisaDTO> listaDto = new ArrayList<OrdemServicoPesquisaDTO>();
+		for (OrdemServico item : listaEmEntidade) {
+			OrdemServicoPesquisaDTO obj = new OrdemServicoPesquisaDTO();
+			BeanUtils.copyProperties(item, obj);
 			listaDto.add(obj);
 		}
 		retorno.setLista(listaDto);
@@ -89,48 +83,35 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 	}
 
 	public boolean delete(Integer id) {
-		Orcamento p = _orcamentoRepository.findOrcamentoById(id);
+		OrdemServico p = _orcamentoServicoRepository.findOrdemServicoById(id);
 		if (p != null) {
-			_orcamentoRepository.delete(p);
+			_orcamentoServicoRepository.delete(p);
 			return true;
 		}
 		return false;
 	}
 
-	public Boolean save(Orcamento entity) {
-
-		// Salvar orçamento
-		Orcamento retorno = _orcamentoRepository.save(entity);
-
-		// Se possuir serviço, gerar ordem de serviço
-		if (retorno.getServicos().size() > 0) {
-			OrdemServico ordemServico = new OrdemServico();
-			ordemServico.setCodStatus(1);
-			ordemServico.setDataAbertura(new Date());
-			ordemServico.setDataEntrega(null);
-			ordemServico.setLevarPecaSubstituida(true);
-			ordemServico.setOrcamento(retorno);
-			_ordemServicoRepository.save(ordemServico);
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean update(Integer id, Orcamento dto) {
-		Orcamento p = _orcamentoRepository.findOrcamentoById(id);
-		if (p != null) {
-			p = dto;
-			_orcamentoRepository.save(p);
+	public Boolean save(OrdemServico entity) {
+		if (_orcamentoServicoRepository.save(entity) != null) {
 			return true;
 		}
 		return false;
 	}
 
-	public Orcamento findOrcamentoById(Integer id) {
-		Orcamento orcamento = _orcamentoRepository.findOrcamentoById(id);
-		if (orcamento != null) {
-			return orcamento;
+	public boolean update(Integer id, OrdemServico dto) {
+		OrdemServico os = _orcamentoServicoRepository.findOrdemServicoById(id);
+		if (os != null) {
+			os = dto;
+			_orcamentoServicoRepository.save(os);
+			return true;
+		}
+		return false;
+	}
+
+	public OrdemServico findOrdemServicoById(Integer id) {
+		OrdemServico os = _orcamentoServicoRepository.findOrdemServicoById(id);
+		if (os != null) {
+			return os;
 		}
 		return null;
 	}
@@ -139,16 +120,14 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 		String descricaoStatus = null;
 		switch (codStatus) {
 		case 1:
-			descricaoStatus = "Vendido";
+			// TODO
+			descricaoStatus = "X";
 			break;
 		case 2:
-			descricaoStatus = "Aguardando Retorno";
+			descricaoStatus = "X";
 			break;
 		case 3:
-			descricaoStatus = "Sem Comunicação";
-			break;
-		case 4:
-			descricaoStatus = "Sem Interesse";
+			descricaoStatus = "X";
 			break;
 		}
 		return descricaoStatus;
