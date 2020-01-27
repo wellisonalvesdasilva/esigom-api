@@ -74,6 +74,9 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
 		List<OrdemServicoPesquisaDTO> listaDto = new ArrayList<OrdemServicoPesquisaDTO>();
 		for (OrdemServico item : listaEmEntidade) {
 			OrdemServicoPesquisaDTO obj = new OrdemServicoPesquisaDTO();
+			obj.setVeiculo(item.getOrcamento().getMarca() + " " + item.getOrcamento().getModelo() + " "
+					+ item.getOrcamento().getAno());
+			obj.setStatus(retornarDescricaoStatus(item.getCodStatus()));
 			BeanUtils.copyProperties(item, obj);
 			listaDto.add(obj);
 		}
@@ -120,14 +123,10 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
 		String descricaoStatus = null;
 		switch (codStatus) {
 		case 1:
-			// TODO
-			descricaoStatus = "X";
+			descricaoStatus = "A Realizar";
 			break;
 		case 2:
-			descricaoStatus = "X";
-			break;
-		case 3:
-			descricaoStatus = "X";
+			descricaoStatus = "Finalizado";
 			break;
 		}
 		return descricaoStatus;

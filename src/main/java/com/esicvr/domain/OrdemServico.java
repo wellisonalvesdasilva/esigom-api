@@ -2,6 +2,8 @@ package com.esicvr.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +14,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "ordem_servico")
 public class OrdemServico implements Serializable {
@@ -23,7 +24,7 @@ public class OrdemServico implements Serializable {
 	private Integer id;
 
 	// Consigo acessar o cliente
-	@OneToOne
+	@OneToOne(cascade = CascadeType.REMOVE)
 	private Orcamento orcamento;
 
 	@Column(name = "dth_inclusao")

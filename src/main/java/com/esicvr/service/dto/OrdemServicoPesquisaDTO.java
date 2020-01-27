@@ -8,7 +8,9 @@ public class OrdemServicoPesquisaDTO {
 
 	private Integer id;
 	private Orcamento orcamento;
+	private String status;
 	private Date dataAbertura;
+	private String veiculo;
 	private Date dataEntrega;
 	private String tempoGarantia;
 	private Integer codStatus;
@@ -31,12 +33,28 @@ public class OrdemServicoPesquisaDTO {
 		this.orcamento = orcamento;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public Date getDataAbertura() {
 		return dataAbertura;
 	}
 
 	public void setDataAbertura(Date dataAbertura) {
 		this.dataAbertura = dataAbertura;
+	}
+
+	public String getVeiculo() {
+		return veiculo;
+	}
+
+	public void setVeiculo(String veiculo) {
+		this.veiculo = veiculo;
 	}
 
 	public Date getDataEntrega() {

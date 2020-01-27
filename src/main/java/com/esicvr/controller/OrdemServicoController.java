@@ -43,8 +43,9 @@ public class OrdemServicoController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public void updatedById(@RequestBody OrdemServico dto, @PathVariable("id") Integer id) {
-		_ordemServicoService.update(id, dto);
+	public Boolean updatedById(@RequestBody OrdemServico dto, @PathVariable("id") Integer id) {
+		Boolean retorno = _ordemServicoService.update(id, dto);
+		return retorno;
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
