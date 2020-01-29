@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.esicvr.domain.Orcamento;
-import com.esicvr.service.OrcamentoService;
+
+import com.esicvr.domain.Entrada;
+import com.esicvr.service.EntradaService;
+import com.esicvr.service.dto.EntradaPesquisaDTO;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
-import com.esicvr.service.dto.OrcamentoPesquisaDTO;
 
 @RestController
 @CrossOrigin
@@ -24,32 +25,32 @@ import com.esicvr.service.dto.OrcamentoPesquisaDTO;
 public class EntradaController {
 
 	@Autowired
-	OrcamentoService _orcamentoService;
+	EntradaService _entradaService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public GenericoRetornoPaginadoDTO<OrcamentoPesquisaDTO> getAll(@RequestParam Map<String, String> parameters) {
-		return _orcamentoService.getAllPaginated(parameters);
+	public GenericoRetornoPaginadoDTO<EntradaPesquisaDTO> getAll(@RequestParam Map<String, String> parameters) {
+		return _entradaService.getAllPaginated(parameters);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void created(@RequestBody Orcamento orcamento) throws NoSuchAlgorithmException {
-		_orcamentoService.save(orcamento);
+	public void created(@RequestBody Entrada entrada) throws NoSuchAlgorithmException {
+		_entradaService.save(entrada);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Orcamento> getById(@PathVariable(value = "id") Integer id) {
-		Orcamento orcamento = _orcamentoService.findOrcamentoById(id);
-		return ResponseEntity.ok().body(orcamento);
+	public ResponseEntity<Entrada> getById(@PathVariable(value = "id") Integer id) {
+		Entrada entrada = _entradaService.findEntradaById(id);
+		return ResponseEntity.ok().body(entrada);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public void updatedById(@RequestBody Orcamento dto, @PathVariable("id") Integer id) {
-		_orcamentoService.update(id, dto);
+	public void updatedById(@RequestBody Entrada entrada, @PathVariable("id") Integer id) {
+		_entradaService.update(id, entrada);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public boolean deleteById(@PathVariable("id") Integer id) {
-		return _orcamentoService.delete(id);
+		return _entradaService.delete(id);
 	}
 
 }

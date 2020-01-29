@@ -14,12 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esicvr.domain.Fornecedor;
-import com.esicvr.domain.Produto;
 import com.esicvr.service.FornecedorService;
-import com.esicvr.service.ProdutoService;
 import com.esicvr.service.dto.FornecedorPesquisaDTO;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
-import com.esicvr.service.dto.ProdutoPesquisaDTO;
 
 @RestController
 @CrossOrigin
@@ -32,6 +29,11 @@ public class FornecedorController {
 	@RequestMapping(method = RequestMethod.GET)
 	public GenericoRetornoPaginadoDTO<FornecedorPesquisaDTO> getAll(@RequestParam Map<String, String> parameters) {
 		return _fornecedorService.getAllPaginated(parameters);
+	}
+	
+	@RequestMapping(value="/", method = RequestMethod.GET)
+	public List<Fornecedor> getAll() {
+		return _fornecedorService.getAll();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

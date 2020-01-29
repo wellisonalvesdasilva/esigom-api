@@ -3,7 +3,6 @@ package com.esicvr.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -16,30 +15,30 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
-import com.esicvr.domain.Fornecedor;
-import com.esicvr.repository.FornecedorRepository;
-import com.esicvr.service.FornecedorService;
-import com.esicvr.service.dto.FornecedorPesquisaDTO;
+import com.esicvr.domain.Entrada;
+import com.esicvr.repository.EntradaRepository;
+import com.esicvr.service.EntradaService;
+import com.esicvr.service.dto.EntradaPesquisaDTO;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
 
 @Component
-public class FornecedorServiceImpl implements FornecedorService {
+public class EntradaServiceImpl implements EntradaService {
 
 	@Autowired
-	FornecedorRepository _fornecedorRepository;
+	EntradaRepository _entradaRepository;
 
-	public Boolean save(Fornecedor entity) {
-		if (_fornecedorRepository.save(entity) != null) {
+	public Boolean save(Entrada entity) {
+		if (_entradaRepository.save(entity) != null) {
 			return true;
 		}
 		return false;
 	}
 
-	public GenericoRetornoPaginadoDTO<FornecedorPesquisaDTO> getAllPaginated(Map<String, String> parameters) {
+	public GenericoRetornoPaginadoDTO<EntradaPesquisaDTO> getAllPaginated(Map<String, String> parameters) {
 
 		/* FILTROS */
-		Specification<Fornecedor> objPredicates = new Specification<Fornecedor>() {
-			public Predicate toPredicate(Root<Fornecedor> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+		Specification<Entrada> objPredicates = new Specification<Entrada>() {
+			public Predicate toPredicate(Root<Entrada> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
 				List<Predicate> filtros = new ArrayList<Predicate>();
 				if (parameters.get("nome") != null && parameters.get("nome") != "") {
 					filtros.add(cb.like(root.get("nome"), "%" + parameters.get("nome") + "%"));
@@ -67,11 +66,11 @@ public class FornecedorServiceImpl implements FornecedorService {
 				Integer.parseInt(parameters.get("limit")), sort);
 
 		/* BUSCAR E RETORNAR AO REST EM DTO */
-		Page<Fornecedor> listEntity = _fornecedorRepository.findAll(objPredicates, paging);
-		GenericoRetornoPaginadoDTO<FornecedorPesquisaDTO> retorno = new GenericoRetornoPaginadoDTO<FornecedorPesquisaDTO>();
-		List<FornecedorPesquisaDTO> listaDto = new ArrayList<FornecedorPesquisaDTO>();
-		for (Fornecedor item : listEntity) {
-			FornecedorPesquisaDTO obj = new FornecedorPesquisaDTO();
+		Page<Entrada> listEntity = _entradaRepository.findAll(objPredicates, paging);
+		GenericoRetornoPaginadoDTO<EntradaPesquisaDTO> retorno = new GenericoRetornoPaginadoDTO<EntradaPesquisaDTO>();
+		List<EntradaPesquisaDTO> listaDto = new ArrayList<EntradaPesquisaDTO>();
+		for (Entrada item : listEntity) {
+			EntradaPesquisaDTO obj = new EntradaPesquisaDTO();
 			BeanUtils.copyProperties(item, obj);
 			listaDto.add(obj);
 		}
@@ -81,34 +80,33 @@ public class FornecedorServiceImpl implements FornecedorService {
 	}
 
 	public boolean delete(Integer id) {
-		Fornecedor fornecedor = _fornecedorRepository.findFornecedorById(id);
-		if (fornecedor != null) {
-			_fornecedorRepository.delete(fornecedor);
+		Entrada entrada = _entradaRepository.findEntradaById(id);
+		if (entrada != null) {
+			_entradaRepository.delete(entrada);
 			return true;
 		}
 		return false;
 	}
 
-	public boolean update(Integer id, Fornecedor dto) {
-		Fornecedor fornecedor = _fornecedorRepository.findFornecedorById(id);
-		if (fornecedor != null) {
-			fornecedor = dto;
-			_fornecedorRepository.save(fornecedor);
+	public boolean update(Integer id, Entrada dto) {
+		Entrada entrada = _entradaRepository.findEntradaById(id);
+		if (entrada != null) {
+			entrada = dto;
+			_entradaRepository.save(entrada);
 			return true;
 		}
 		return false;
 	}
 
-	public Fornecedor findFornecedorById(Integer id) {
-		Fornecedor fornecedor = _fornecedorRepository.findFornecedorById(id);
-		if (fornecedor != null) {
-			return fornecedor;
+	public Entrada findEntradaById(Integer id) {
+		Entrada entrada = _entradaRepository.findEntradaById(id);
+		if (entrada != null) {
+			return entrada;
 		}
 		return null;
 	}
 
-
-	public List<Fornecedor> getAll() {
-		return _fornecedorRepository.findAll();
+	public List<Entrada> getAll() {
+		return _entradaRepository.findAll();
 	}
 }

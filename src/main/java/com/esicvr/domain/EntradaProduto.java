@@ -18,6 +18,9 @@ import com.esicvr.domain.Produto;
 
 public class EntradaProduto implements Serializable {
 
+
+	private static final long serialVersionUID = 2319928631372632386L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")

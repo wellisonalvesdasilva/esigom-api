@@ -23,4 +23,6 @@ public interface FornecedorService {
 
 	public GenericoRetornoPaginadoDTO<FornecedorPesquisaDTO> getAllPaginated(Map<String, String> parameters);
 
+	public List<Fornecedor> getAll();
+
 }

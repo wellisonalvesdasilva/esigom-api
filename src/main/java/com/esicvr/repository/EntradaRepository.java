@@ -4,16 +4,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import com.esicvr.domain.Fornecedor;
+import com.esicvr.domain.CentroCusto;
+import com.esicvr.domain.Entrada;
+import com.esicvr.domain.FormaPagamento;
 
 @Repository
-public interface FornecedorRepository extends JpaRepository<Fornecedor, Long> {
+public interface EntradaRepository extends JpaRepository<Entrada, Long> {
 
-	Page<Fornecedor> findAll(Specification<Fornecedor> spec, Pageable pageable);
+	Page<Entrada> findAll(Specification<Entrada> objPredicates, Pageable paging);
 
-	Fornecedor findFornecedorById(Integer id);
+	Entrada findEntradaById(Integer id);
 
 }
