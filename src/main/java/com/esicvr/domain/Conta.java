@@ -16,8 +16,6 @@ import javax.persistence.TemporalType;
 @Table(name = "conta")
 public class Conta implements Serializable {
 
-	private static final long serialVersionUID = 805720588858454046L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
@@ -52,13 +50,8 @@ public class Conta implements Serializable {
 	@Column(name = "tipo")
 	private Integer tipo;
 
-	public Integer getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(Integer tipo) {
-		this.tipo = tipo;
-	}
+	@OneToOne
+	CentroCusto centroCusto;
 
 	public int getId() {
 		return id;
@@ -132,8 +125,20 @@ public class Conta implements Serializable {
 		this.situacao = situacao;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public Integer getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(Integer tipo) {
+		this.tipo = tipo;
+	}
+
+	public CentroCusto getCentroCusto() {
+		return centroCusto;
+	}
+
+	public void setCentroCusto(CentroCusto centroCusto) {
+		this.centroCusto = centroCusto;
 	}
 
 }
