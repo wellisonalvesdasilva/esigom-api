@@ -23,8 +23,7 @@ public class OrdemServico implements Serializable {
 	@Column(name = "id")
 	private Integer id;
 
-	// Consigo acessar o cliente
-	@OneToOne(cascade = CascadeType.REMOVE)
+	@OneToOne
 	private Orcamento orcamento;
 
 	@Column(name = "dth_inclusao")
