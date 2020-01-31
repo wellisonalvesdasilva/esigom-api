@@ -23,6 +23,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "compra")
 public class Compra implements Serializable {
 
+	private static final long serialVersionUID = 9213737419987223831L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
@@ -40,6 +42,11 @@ public class Compra implements Serializable {
 	@Column(name = "data_entrada")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataEntrada;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JsonManagedReference
+	@JoinColumn(name = "compra_id")
+	private Set<CompraParcela> parcelas;
 
 	@Column(name = "valor")
 	private Double valor;
@@ -101,6 +108,14 @@ public class Compra implements Serializable {
 
 	public void setNotaFiscal(String notaFiscal) {
 		this.notaFiscal = notaFiscal;
+	}
+
+	public Set<CompraParcela> getParcelas() {
+		return parcelas;
+	}
+
+	public void setParcelas(Set<CompraParcela> parcelas) {
+		this.parcelas = parcelas;
 	}
 
 }

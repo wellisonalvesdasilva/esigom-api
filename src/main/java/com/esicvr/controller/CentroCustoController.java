@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esicvr.domain.CentroCusto;
+import com.esicvr.domain.Fornecedor;
 import com.esicvr.domain.Orcamento;
 import com.esicvr.service.CentroCustoService;
 import com.esicvr.service.dto.CentroCustoPesquisaDTO;
@@ -34,8 +35,13 @@ public class CentroCustoController {
 	public GenericoRetornoPaginadoDTO<CentroCustoPesquisaDTO> getAll(@RequestParam Map<String, String> parameters) {
 		return _centroCustoService.getAllPaginated(parameters);
 	}
+	
+	@RequestMapping(value="/", method = RequestMethod.GET)
+	public List<CentroCusto> getAll() {
+		return _centroCustoService.getAll();
+	}
 
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST)
 	public void created(@RequestBody CentroCusto centroCusto) throws NoSuchAlgorithmException {
 		_centroCustoService.save(centroCusto);
 	}
