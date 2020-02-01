@@ -48,6 +48,11 @@ public class Compra implements Serializable {
 	@JoinColumn(name = "compra_id")
 	private Set<CompraParcela> parcelas;
 
+	@OneToMany(cascade = CascadeType.ALL)
+	@JsonManagedReference
+	@JoinColumn(name = "compra_id")
+	private Set<CompraProduto> produtos;
+
 	@Column(name = "valor")
 	private Double valor;
 
@@ -94,6 +99,22 @@ public class Compra implements Serializable {
 		this.dataEntrada = dataEntrada;
 	}
 
+	public Set<CompraParcela> getParcelas() {
+		return parcelas;
+	}
+
+	public void setParcelas(Set<CompraParcela> parcelas) {
+		this.parcelas = parcelas;
+	}
+
+	public Set<CompraProduto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(Set<CompraProduto> produtos) {
+		this.produtos = produtos;
+	}
+
 	public Double getValor() {
 		return valor;
 	}
@@ -108,14 +129,6 @@ public class Compra implements Serializable {
 
 	public void setNotaFiscal(String notaFiscal) {
 		this.notaFiscal = notaFiscal;
-	}
-
-	public Set<CompraParcela> getParcelas() {
-		return parcelas;
-	}
-
-	public void setParcelas(Set<CompraParcela> parcelas) {
-		this.parcelas = parcelas;
 	}
 
 }

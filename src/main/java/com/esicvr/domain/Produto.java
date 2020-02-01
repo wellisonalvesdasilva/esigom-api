@@ -40,6 +40,19 @@ public class Produto implements Serializable {
 	@JoinColumn(name = "produto_id")
 	private Set<OrcamentoProduto> produtos;
 
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "produto_id")
+	private Set<CompraProduto> products;
+
+	public Set<CompraProduto> getProducts() {
+		return products;
+	}
+
+	public void setProducts(Set<CompraProduto> products) {
+		this.products = products;
+	}
+
 	public int getId() {
 		return id;
 	}

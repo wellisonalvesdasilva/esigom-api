@@ -39,8 +39,19 @@ public class CompraParcela implements Serializable {
 	@Column(name = "documento")
 	private String documento;
 
+	@Column(name = "ordem")
+	private Integer ordem;
+
 	@Column(name = "valor")
 	private Double valor;
+
+	public Integer getOrdem() {
+		return ordem;
+	}
+
+	public void setOrdem(Integer ordem) {
+		this.ordem = ordem;
+	}
 
 	public Integer getId() {
 		return id;
