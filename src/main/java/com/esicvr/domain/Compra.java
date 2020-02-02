@@ -53,9 +53,6 @@ public class Compra implements Serializable {
 	@JoinColumn(name = "compra_id")
 	private Set<CompraProduto> produtos;
 
-	@Column(name = "valor")
-	private Double valor;
-
 	@Column(name = "notaFiscal")
 	private String notaFiscal;
 
@@ -113,14 +110,6 @@ public class Compra implements Serializable {
 
 	public void setProdutos(Set<CompraProduto> produtos) {
 		this.produtos = produtos;
-	}
-
-	public Double getValor() {
-		return valor;
-	}
-
-	public void setValor(Double valor) {
-		this.valor = valor;
 	}
 
 	public String getNotaFiscal() {

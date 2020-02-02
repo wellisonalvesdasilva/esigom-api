@@ -73,6 +73,7 @@ public class CompraServiceImpl implements CompraService {
 		List<CompraPesquisaDTO> listaDto = new ArrayList<CompraPesquisaDTO>();
 		for (Compra item : listaEmEntidade) {
 			CompraPesquisaDTO obj = new CompraPesquisaDTO();
+			obj.setQuantidadeProdutos(item.getProdutos().size());
 			BeanUtils.copyProperties(item, obj);
 			listaDto.add(obj);
 		}
