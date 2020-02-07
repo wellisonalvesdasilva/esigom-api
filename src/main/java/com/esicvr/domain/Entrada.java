@@ -45,22 +45,6 @@ public class Entrada implements Serializable {
 	@OneToOne
 	private Fornecedor fornecedor;
 
-	public Fornecedor getFornecedor() {
-		return fornecedor;
-	}
-
-	public void setFornecedor(Fornecedor fornecedor) {
-		this.fornecedor = fornecedor;
-	}
-
-	public String getNotaFiscal() {
-		return notaFiscal;
-	}
-
-	public void setNotaFiscal(String notaFiscal) {
-		this.notaFiscal = notaFiscal;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -77,12 +61,28 @@ public class Entrada implements Serializable {
 		this.dataEntrada = dataEntrada;
 	}
 
+	public String getNotaFiscal() {
+		return notaFiscal;
+	}
+
+	public void setNotaFiscal(String notaFiscal) {
+		this.notaFiscal = notaFiscal;
+	}
+
 	public Set<EntradaProduto> getProdutos() {
 		return produtos;
 	}
 
 	public void setProdutos(Set<EntradaProduto> produtos) {
 		this.produtos = produtos;
+	}
+
+	public Fornecedor getFornecedor() {
+		return fornecedor;
+	}
+
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
 	}
 
 }

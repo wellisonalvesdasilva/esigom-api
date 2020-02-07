@@ -6,7 +6,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.esicvr.domain.Caixa;
 import com.esicvr.domain.Compra;
 
 @Repository

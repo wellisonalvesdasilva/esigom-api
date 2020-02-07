@@ -71,6 +71,7 @@ public class EntradaServiceImpl implements EntradaService {
 		List<EntradaPesquisaDTO> listaDto = new ArrayList<EntradaPesquisaDTO>();
 		for (Entrada item : listEntity) {
 			EntradaPesquisaDTO obj = new EntradaPesquisaDTO();
+			obj.setQtdeProdutos(item.getProdutos().size());
 			BeanUtils.copyProperties(item, obj);
 			listaDto.add(obj);
 		}

@@ -2,16 +2,18 @@ package com.esicvr.service.dto;
 
 import java.util.Date;
 
-import com.esicvr.domain.Cliente;
-
 public class ContaPesquisaDTO {
 	private int id;
-	private String descricao;
-	private Cliente cliente;
-	private Date dataVencimento;
-	private String situacao;
+	private int idConta;
 	private String tipo;
+	private String descricao;
+	private String pessoa;
+	private Date dataVencimento;
+	private Double valor;
+	private String situacao;
+
 	private Double valorPago;
+	private Date dataPagamento;
 
 	public int getId() {
 		return id;
@@ -29,12 +31,12 @@ public class ContaPesquisaDTO {
 		this.descricao = descricao;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
+	public String getPessoa() {
+		return pessoa;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setPessoa(String pessoa) {
+		this.pessoa = pessoa;
 	}
 
 	public Date getDataVencimento() {
@@ -45,12 +47,12 @@ public class ContaPesquisaDTO {
 		this.dataVencimento = dataVencimento;
 	}
 
-	public String getSituacao() {
-		return situacao;
+	public Double getValor() {
+		return valor;
 	}
 
-	public void setSituacao(String situacao) {
-		this.situacao = situacao;
+	public void setValor(Double valor) {
+		this.valor = valor;
 	}
 
 	public Double getValorPago() {
@@ -61,12 +63,36 @@ public class ContaPesquisaDTO {
 		this.valorPago = valorPago;
 	}
 
+	public Date getDataPagamento() {
+		return dataPagamento;
+	}
+
+	public void setDataPagamento(Date dataPagamento) {
+		this.dataPagamento = dataPagamento;
+	}
+
+	public String getSituacao() {
+		return situacao;
+	}
+
+	public void setSituacao(String situacao) {
+		this.situacao = situacao;
+	}
+
 	public String getTipo() {
 		return tipo;
 	}
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+
+	public int getIdConta() {
+		return idConta;
+	}
+
+	public void setIdConta(int idConta) {
+		this.idConta = idConta;
 	}
 
 }

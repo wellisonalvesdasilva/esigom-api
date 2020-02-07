@@ -20,4 +20,6 @@ public interface CompraService {
 
 	public boolean delete(Integer id);
 
+	public Boolean incluirEmEstoque(Integer id);
+
 }

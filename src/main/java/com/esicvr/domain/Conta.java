@@ -1,28 +1,39 @@
 package com.esicvr.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "conta")
 public class Conta implements Serializable {
+
+	private static final long serialVersionUID = -6625912966887161639L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private int id;
 
-	@Column(name = "descricao")
-	private String descricao;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JsonManagedReference
+	@JoinColumn(name = "conta_id")
+	private Set<ContaParcela> parcelas;
+
+	@OneToOne
+	private Fornecedor fornecedor;
 
 	@OneToOne
 	private Cliente cliente;
@@ -30,19 +41,11 @@ public class Conta implements Serializable {
 	@Column(name = "numero_documento")
 	private String numeroDocumento;
 
-	@Column(name = "data_vencimento")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dataVencimento;
-
 	@Column(name = "valor")
 	private Double valor;
 
 	@Column(name = "valor_pago")
 	private Double valorPago;
-
-	@Column(name = "data_pagamento")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dataPagamento;
 
 	@Column(name = "situacao")
 	private Integer situacao;
@@ -53,20 +56,12 @@ public class Conta implements Serializable {
 	@OneToOne
 	CentroCusto centroCusto;
 
-	public int getId() {
-		return id;
+	public Set<ContaParcela> getParcelas() {
+		return parcelas;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setParcelas(Set<ContaParcela> parcelas) {
+		this.parcelas = parcelas;
 	}
 
 	public Cliente getCliente() {
@@ -77,20 +72,28 @@ public class Conta implements Serializable {
 		this.cliente = cliente;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Fornecedor getFornecedor() {
+		return fornecedor;
+	}
+
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
+	}
+
 	public String getNumeroDocumento() {
 		return numeroDocumento;
 	}
 
 	public void setNumeroDocumento(String numeroDocumento) {
 		this.numeroDocumento = numeroDocumento;
-	}
-
-	public Date getDataVencimento() {
-		return dataVencimento;
-	}
-
-	public void setDataVencimento(Date dataVencimento) {
-		this.dataVencimento = dataVencimento;
 	}
 
 	public Double getValor() {
@@ -107,14 +110,6 @@ public class Conta implements Serializable {
 
 	public void setValorPago(Double valorPago) {
 		this.valorPago = valorPago;
-	}
-
-	public Date getDataPagamento() {
-		return dataPagamento;
-	}
-
-	public void setDataPagamento(Date dataPagamento) {
-		this.dataPagamento = dataPagamento;
 	}
 
 	public Integer getSituacao() {

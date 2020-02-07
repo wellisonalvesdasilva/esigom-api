@@ -3,12 +3,10 @@ package com.esicvr.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,15 +15,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
-
-import com.esicvr.domain.Cliente;
 import com.esicvr.domain.Conta;
-import com.esicvr.domain.Perfil;
-import com.esicvr.repository.ClienteRepository;
+import com.esicvr.domain.ContaParcela;
+import com.esicvr.repository.ContaParcelaRepository;
 import com.esicvr.repository.ContaRepository;
-import com.esicvr.service.ClienteService;
 import com.esicvr.service.ContaService;
-import com.esicvr.service.dto.ClientePesquisaDTO;
 import com.esicvr.service.dto.ContaPesquisaDTO;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
 
@@ -34,6 +28,9 @@ public class ContaServiceImpl implements ContaService {
 
 	@Autowired
 	ContaRepository _contaRepository;
+
+	@Autowired
+	ContaParcelaRepository _contaParcelaRepository;
 
 	public Boolean save(Conta entity) {
 		if (_contaRepository.save(entity) != null) {
@@ -45,18 +42,18 @@ public class ContaServiceImpl implements ContaService {
 	public GenericoRetornoPaginadoDTO<ContaPesquisaDTO> getAllPaginated(Map<String, String> parameters) {
 
 		/* FILTROS */
-		Specification<Conta> objPredicates = new Specification<Conta>() {
-			public Predicate toPredicate(Root<Conta> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+		Specification<ContaParcela> objPredicates = new Specification<ContaParcela>() {
+			public Predicate toPredicate(Root<ContaParcela> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
 				List<Predicate> filtros = new ArrayList<Predicate>();
-				if (parameters.get("nome") != null && parameters.get("nome") != "") {
-					filtros.add(cb.like(root.get("nome"), "%" + parameters.get("nome") + "%"));
-				}
-				if (parameters.get("cpf") != null && parameters.get("cpf") != "") {
-					filtros.add(cb.equal(root.get("cpf"), parameters.get("cpf")));
-				}
-				if (parameters.get("email") != null && parameters.get("email") != "") {
-					filtros.add(cb.equal(root.get("email"), parameters.get("email")));
-				}
+				/*
+				 * if (parameters.get("nome") != null && parameters.get("nome") != "") {
+				 * 
+				 * filtros.add(cb.like(root.get("nome"), "%" + parameters.get("nome") + "%")); }
+				 * if (parameters.get("cpf") != null && parameters.get("cpf") != "") {
+				 * filtros.add(cb.equal(root.get("cpf"), parameters.get("cpf"))); } if
+				 * (parameters.get("email") != null && parameters.get("email") != "") {
+				 * filtros.add(cb.equal(root.get("email"), parameters.get("email"))); }
+				 */
 
 				Predicate finalQuery = cb.and(filtros.toArray(new Predicate[filtros.size()]));
 				return finalQuery;
@@ -74,14 +71,18 @@ public class ContaServiceImpl implements ContaService {
 				Integer.parseInt(parameters.get("limit")), sort);
 
 		/* BUSCAR E RETORNAR AO REST EM DTO */
-		Page<Conta> listaEmEntidade = _contaRepository.findAll(objPredicates, paging);
+		Page<ContaParcela> listaEmEntidade = _contaParcelaRepository.findAll(objPredicates, paging);
 		GenericoRetornoPaginadoDTO<ContaPesquisaDTO> retorno = new GenericoRetornoPaginadoDTO<ContaPesquisaDTO>();
 		List<ContaPesquisaDTO> listaDto = new ArrayList<ContaPesquisaDTO>();
-		for (Conta item : listaEmEntidade) {
+		for (ContaParcela item : listaEmEntidade) {
 			ContaPesquisaDTO obj = new ContaPesquisaDTO();
-			obj.setSituacao(retornarSituacao(item.getSituacao()));
-			obj.setTipo(retornarTipoConta(item.getTipo()));
 			BeanUtils.copyProperties(item, obj);
+			obj.setSituacao(retornarSituacao(item.getSituacao()));
+			obj.setTipo((item.getSituacao() == 1) ? ("À Pagar") : ("À Receber"));
+			obj.setSituacao(retornarSituacao(item.getSituacao()));
+			obj.setPessoa((item.getConta().getFornecedor() != null) ? (item.getConta().getFornecedor().getDescricao())
+					: (item.getConta().getCliente().getNome()));
+			obj.setIdConta(item.getConta().getId());
 			listaDto.add(obj);
 		}
 		retorno.setLista(listaDto);
@@ -90,9 +91,9 @@ public class ContaServiceImpl implements ContaService {
 	}
 
 	public boolean delete(Integer id) {
-		Conta p = _contaRepository.findContaById(id);
-		if (p != null) {
-			_contaRepository.delete(p);
+		ContaParcela contaParcela = _contaParcelaRepository.findContaParcelaById(id);
+		if (contaParcela != null) {
+			_contaParcelaRepository.delete(contaParcela);
 			return true;
 		}
 		return false;
@@ -130,20 +131,6 @@ public class ContaServiceImpl implements ContaService {
 			break;
 		}
 		return descricaoStatus;
-	}
-
-	public String retornarTipoConta(Integer tipo) {
-		String tipoConta = null;
-		switch (tipo) {
-		case 1:
-			tipoConta = "À Pagar";
-			break;
-		case 2:
-			tipoConta = "À Receber";
-			break;
-
-		}
-		return tipoConta;
 	}
 
 }

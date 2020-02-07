@@ -1,8 +1,10 @@
 package com.esicvr.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -18,7 +20,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import com.esicvr.domain.Compra;
+import com.esicvr.domain.CompraProduto;
+import com.esicvr.domain.Entrada;
+import com.esicvr.domain.EntradaProduto;
 import com.esicvr.repository.CompraRepository;
+import com.esicvr.repository.EntradaRepository;
 import com.esicvr.service.CompraService;
 import com.esicvr.service.dto.CompraPesquisaDTO;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
@@ -28,6 +34,9 @@ public class CompraServiceImpl implements CompraService {
 
 	@Autowired
 	CompraRepository _compraRepository;
+
+	@Autowired
+	EntradaRepository _entradaRepository;
 
 	public Boolean save(Compra compra) {
 		if (_compraRepository.save(compra) != null) {
@@ -109,4 +118,30 @@ public class CompraServiceImpl implements CompraService {
 		return null;
 	}
 
+	public Boolean incluirEmEstoque(Integer id) {
+		
+		Compra compra = _compraRepository.findCompraById(id);
+		if (compra != null) {
+
+			Entrada entrada = new Entrada();
+			entrada.setDataEntrada(compra.getDataEntrada());
+			entrada.setNotaFiscal(compra.getNotaFiscal());
+			entrada.setFornecedor(compra.getFornecedor());
+
+			Set<EntradaProduto> listProdutos = new HashSet<>();
+			
+			for (CompraProduto item : compra.getProdutos()) {
+				EntradaProduto entradaProduto = new EntradaProduto();
+				entradaProduto.setProduto(item.getProduto());
+				entradaProduto.setQuantidade(item.getQuantidade());
+				entradaProduto.setEntrada(entrada);
+				listProdutos.add(entradaProduto);
+			}
+			entrada.setProdutos(listProdutos);
+			
+			_entradaRepository.save(entrada);
+			return true;
+		}
+		return null;
+	}
 }

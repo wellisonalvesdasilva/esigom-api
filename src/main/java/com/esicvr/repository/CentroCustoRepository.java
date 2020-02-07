@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.esicvr.domain.CentroCusto;
-import com.esicvr.domain.FormaPagamento;
 
 @Repository
 public interface CentroCustoRepository extends JpaRepository<CentroCusto, Long> {

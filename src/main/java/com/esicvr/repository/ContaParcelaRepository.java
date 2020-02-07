@@ -5,16 +5,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
-
-import com.esicvr.domain.Cliente;
+import com.esicvr.domain.ContaParcela;
 
 @Repository
-public interface ClienteRepository extends PagingAndSortingRepository<Cliente, Long> {
-	Page<Cliente> findAll(Specification<Cliente> spec, Pageable pageable);
+public interface ContaParcelaRepository extends PagingAndSortingRepository<ContaParcela, Long> {
+	Page<ContaParcela> findAll(Specification<ContaParcela> spec, Pageable pageable);
+	ContaParcela findContaParcelaById(Integer id);
 
-	Cliente findUsuarioById(Integer id);
-
-	Cliente findClienteById(Integer id);
-
-	Cliente findClienteByCpf(String cpf);
 }

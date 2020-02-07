@@ -1,4 +1,5 @@
 package com.esicvr.controller;
+
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,13 @@ public class CompraController {
 	public ResponseEntity<Compra> getById(@PathVariable(value = "id") Integer id) {
 		Compra compra = _compraService.findCompraById(id);
 		return ResponseEntity.ok().body(compra);
+	}
+
+	@RequestMapping(value = "/incluirEmEstoque/{id}", method = RequestMethod.POST)
+	public Boolean incluirEmEstoque(@PathVariable(value = "id") Integer id) {
+		Boolean retorno = _compraService.incluirEmEstoque(id);
+		return retorno;
+
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
