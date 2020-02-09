@@ -38,6 +38,15 @@ public class Caixa implements Serializable {
 	@OneToOne
 	CentroCusto centroCusto;
 
+	@OneToOne
+	Orcamento orcamento;
+
+	@OneToOne
+	Compra compra;
+
+	@OneToOne
+	Conta conta;
+
 	public int getId() {
 		return id;
 	}
@@ -84,6 +93,30 @@ public class Caixa implements Serializable {
 
 	public void setCentroCusto(CentroCusto centroCusto) {
 		this.centroCusto = centroCusto;
+	}
+
+	public Orcamento getOrcamento() {
+		return orcamento;
+	}
+
+	public void setOrcamento(Orcamento orcamento) {
+		this.orcamento = orcamento;
+	}
+
+	public Compra getCompra() {
+		return compra;
+	}
+
+	public void setCompra(Compra compra) {
+		this.compra = compra;
+	}
+
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
 	}
 
 }

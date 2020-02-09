@@ -41,6 +41,17 @@ public class OrcamentoProduto implements Serializable {
 	@JoinColumn(name = "produto_id")
 	private Produto produto;
 
+	@Column(name = "cliente_leva_peca")
+	private Boolean clienteLevaPeca;
+
+	public Boolean getClienteLevaPeca() {
+		return clienteLevaPeca;
+	}
+
+	public void setClienteLevaPeca(Boolean clienteLevaPeca) {
+		this.clienteLevaPeca = clienteLevaPeca;
+	}
+
 	public Integer getId() {
 		return id;
 	}

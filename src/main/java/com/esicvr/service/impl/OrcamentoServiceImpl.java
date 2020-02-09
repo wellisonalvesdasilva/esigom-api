@@ -20,10 +20,12 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import com.esicvr.domain.Caixa;
+import com.esicvr.domain.CentroCusto;
 import com.esicvr.domain.Orcamento;
 import com.esicvr.domain.OrcamentoProduto;
 import com.esicvr.domain.OrdemServico;
 import com.esicvr.repository.CaixaRepository;
+import com.esicvr.repository.CentroCustoRepository;
 import com.esicvr.repository.OrcamentoRepository;
 import com.esicvr.repository.OrdemServicoRepository;
 import com.esicvr.service.OrcamentoService;
@@ -41,6 +43,9 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 
 	@Autowired
 	CaixaRepository _caixaRepository;
+
+	@Autowired
+	CentroCustoRepository _centroCustoRepository;
 
 	public GenericoRetornoPaginadoDTO<OrcamentoPesquisaDTO> getAllPaginated(Map<String, String> parameters) {
 
@@ -104,16 +109,18 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 
 	public Boolean save(Orcamento orcamento) {
 		Orcamento retorno = _orcamentoRepository.save(orcamento);
-		return inclusoesAdicionaisOrcamento(retorno, "save");
+		atualizarOuInserirOrdemServicoOuCaixa(retorno);
+		return true;
 	}
 
-	public boolean update(Integer id, Orcamento dto) {
-		Orcamento p = _orcamentoRepository.findOrcamentoById(id);
-		if (p != null) {
-			p = dto;
-			_orcamentoRepository.save(p);
+	public boolean update(Integer id, Orcamento orcamentoDTO) {
+		Orcamento orcamento = _orcamentoRepository.findOrcamentoById(id);
+		if (orcamento != null) {
+			orcamento = orcamentoDTO;
+			_orcamentoRepository.save(orcamento);
 		}
-		return inclusoesAdicionaisOrcamento(p, "update");
+		atualizarOuInserirOrdemServicoOuCaixa(orcamento);
+		return true;
 	}
 
 	public Orcamento findOrcamentoById(Integer id) {
@@ -143,8 +150,9 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 		return descricaoStatus;
 	}
 
-	public boolean inclusoesAdicionaisOrcamento(Orcamento orcamento, String acao) {
+	public void atualizarOuInserirOrdemServicoOuCaixa(Orcamento orcamento) {
 
+		// ORDEM DE SERVIÇOS
 		OrdemServico objBuscaOrdemServico = _ordemServicoRepository.findOrdemServicoByOrcamento(orcamento);
 		// Verificar se existem serviços e se há O.S. em aberto
 		if (orcamento.getServicos().size() > 0 && objBuscaOrdemServico == null) {
@@ -158,34 +166,31 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 		} else if (orcamento.getServicos().size() > 0 && objBuscaOrdemServico != null) {
 			// TODO: atualizar informações
 			objBuscaOrdemServico.setDataAbertura(new Date());
+			_ordemServicoRepository.save(objBuscaOrdemServico);
 		} else {
 			_ordemServicoRepository.delete(objBuscaOrdemServico);
 		}
-		return true;
-		
-		
-		
-/* Buscar Caixa - Antes Criar Método Buscar por Orcamento
-		Caixa objCaixa = _caixaRepository.findOrdemServicoByOrcamento(orcamento);
-		// Verificar se existem serviços e se há O.S. em aberto
-		if (orcamento.getServicos().size() > 0 && objBuscaOrdemServico == null) {
-			OrdemServico ordemServico = new OrdemServico();
-			ordemServico.setCodStatus(1);
-			ordemServico.setDataAbertura(new Date());
-			ordemServico.setDataEntrega(null);
-			ordemServico.setLevarPecaSubstituida(true);
-			ordemServico.setOrcamento(orcamento);
-			_ordemServicoRepository.save(ordemServico);
-		} else if (orcamento.getServicos().size() > 0 && objBuscaOrdemServico != null) {
-			// TODO: atualizar informações
-			objBuscaOrdemServico.setDataAbertura(new Date());
-		} else {
-			_ordemServicoRepository.delete(objBuscaOrdemServico);
-		}
-		
-	*/	
-		
-		
-	}
 
+		// CAIXA
+		Caixa objCaixa = _caixaRepository.findCaixaByOrcamento(orcamento);
+		
+		if (objCaixa != null && orcamento.getCodStatus() == 1) {
+			// TODO
+			objCaixa.setDataPagamento(new Date());
+			_caixaRepository.save(objCaixa);
+		} else if (objCaixa == null && orcamento.getCodStatus() == 1) {
+			CentroCusto centroCusto = _centroCustoRepository.findCentroCustoById(13);
+			Caixa caixa = new Caixa();
+			caixa.setDescricao("Venda à vista de orçamento cód: " + orcamento.getId());
+			caixa.setDataPagamento(new Date());
+			// TODO
+			caixa.setValor(39.90);
+			caixa.setTipo(1);
+			caixa.setCentroCusto(centroCusto);
+			caixa.setOrcamento(orcamento);
+			_caixaRepository.save(caixa);
+		} else if (objCaixa != null && orcamento.getCodStatus() != 1) {
+			_caixaRepository.delete(objCaixa);
+		}
+	}
 }

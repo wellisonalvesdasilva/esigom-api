@@ -18,10 +18,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 @Entity
 @Table(name = "cliente")
 public class Cliente implements Serializable {
+
+	private static final long serialVersionUID = -4555880787844133255L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
