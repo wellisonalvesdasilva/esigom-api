@@ -43,8 +43,8 @@ public class ContaController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public void updatedById(@RequestBody Conta conta, @PathVariable("id") Integer id) {
-		_contaService.update(id, conta);
+	public boolean updatedById(@RequestBody Conta conta, @PathVariable("id") Integer id) {
+		return _contaService.update(id, conta);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

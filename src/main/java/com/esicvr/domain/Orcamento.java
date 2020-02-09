@@ -64,12 +64,12 @@ public class Orcamento implements Serializable {
 	@Column(name = "cod_status")
 	private Integer codStatus;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
 	@JoinColumn(name = "orcamento_id")
 	private Set<OrcamentoProduto> produtos;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	// Envitar Looping Infinito
 	@JsonManagedReference
 	@JoinColumn(name = "orcamento_id")

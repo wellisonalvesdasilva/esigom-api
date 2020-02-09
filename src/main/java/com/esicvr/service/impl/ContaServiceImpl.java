@@ -78,7 +78,7 @@ public class ContaServiceImpl implements ContaService {
 			ContaPesquisaDTO obj = new ContaPesquisaDTO();
 			BeanUtils.copyProperties(item, obj);
 			obj.setSituacao(retornarSituacao(item.getSituacao()));
-			obj.setTipo((item.getSituacao() == 1) ? ("À Pagar") : ("À Receber"));
+			obj.setTipo((item.getConta().getTipo() == 1) ? ("À Pagar") : ("À Receber"));
 			obj.setSituacao(retornarSituacao(item.getSituacao()));
 			obj.setPessoa((item.getConta().getFornecedor() != null) ? (item.getConta().getFornecedor().getDescricao())
 					: (item.getConta().getCliente().getNome()));

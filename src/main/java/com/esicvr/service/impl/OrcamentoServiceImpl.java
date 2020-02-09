@@ -19,9 +19,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import com.esicvr.domain.Caixa;
 import com.esicvr.domain.Orcamento;
 import com.esicvr.domain.OrcamentoProduto;
 import com.esicvr.domain.OrdemServico;
+import com.esicvr.repository.CaixaRepository;
 import com.esicvr.repository.OrcamentoRepository;
 import com.esicvr.repository.OrdemServicoRepository;
 import com.esicvr.service.OrcamentoService;
@@ -36,6 +38,9 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 
 	@Autowired
 	OrdemServicoRepository _ordemServicoRepository;
+
+	@Autowired
+	CaixaRepository _caixaRepository;
 
 	public GenericoRetornoPaginadoDTO<OrcamentoPesquisaDTO> getAllPaginated(Map<String, String> parameters) {
 
@@ -79,8 +84,8 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 			obj.setStatus(retornarDescricaoStatus(item.getCodStatus()));
 			// TODO
 			obj.setDataInclusao(item.getDataInclusao());
-			obj.setValorConta("R$44.000,00");
-			obj.setValorFinal("R$50.000,00");
+			obj.setValorConta("R$22.000,00");
+			obj.setValorFinal("R$10.000,00");
 			listaDto.add(obj);
 		}
 		retorno.setLista(listaDto);
@@ -97,24 +102,9 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 		return false;
 	}
 
-	public Boolean save(Orcamento entity) {
-
-		// Salvar orçamento
-		Orcamento retorno = _orcamentoRepository.save(entity);
-
-		// Se possuir serviço, gerar ordem de serviço
-		if (retorno.getServicos().size() > 0) {
-			OrdemServico ordemServico = new OrdemServico();
-			ordemServico.setCodStatus(1);
-			ordemServico.setDataAbertura(new Date());
-			ordemServico.setDataEntrega(null);
-			ordemServico.setLevarPecaSubstituida(true);
-			ordemServico.setOrcamento(retorno);
-			_ordemServicoRepository.save(ordemServico);
-			return true;
-		}
-
-		return false;
+	public Boolean save(Orcamento orcamento) {
+		Orcamento retorno = _orcamentoRepository.save(orcamento);
+		return inclusoesAdicionaisOrcamento(retorno, "save");
 	}
 
 	public boolean update(Integer id, Orcamento dto) {
@@ -122,9 +112,8 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 		if (p != null) {
 			p = dto;
 			_orcamentoRepository.save(p);
-			return true;
 		}
-		return false;
+		return inclusoesAdicionaisOrcamento(p, "update");
 	}
 
 	public Orcamento findOrcamentoById(Integer id) {
@@ -153,4 +142,50 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 		}
 		return descricaoStatus;
 	}
+
+	public boolean inclusoesAdicionaisOrcamento(Orcamento orcamento, String acao) {
+
+		OrdemServico objBuscaOrdemServico = _ordemServicoRepository.findOrdemServicoByOrcamento(orcamento);
+		// Verificar se existem serviços e se há O.S. em aberto
+		if (orcamento.getServicos().size() > 0 && objBuscaOrdemServico == null) {
+			OrdemServico ordemServico = new OrdemServico();
+			ordemServico.setCodStatus(1);
+			ordemServico.setDataAbertura(new Date());
+			ordemServico.setDataEntrega(null);
+			ordemServico.setLevarPecaSubstituida(true);
+			ordemServico.setOrcamento(orcamento);
+			_ordemServicoRepository.save(ordemServico);
+		} else if (orcamento.getServicos().size() > 0 && objBuscaOrdemServico != null) {
+			// TODO: atualizar informações
+			objBuscaOrdemServico.setDataAbertura(new Date());
+		} else {
+			_ordemServicoRepository.delete(objBuscaOrdemServico);
+		}
+		return true;
+		
+		
+		
+/* Buscar Caixa - Antes Criar Método Buscar por Orcamento
+		Caixa objCaixa = _caixaRepository.findOrdemServicoByOrcamento(orcamento);
+		// Verificar se existem serviços e se há O.S. em aberto
+		if (orcamento.getServicos().size() > 0 && objBuscaOrdemServico == null) {
+			OrdemServico ordemServico = new OrdemServico();
+			ordemServico.setCodStatus(1);
+			ordemServico.setDataAbertura(new Date());
+			ordemServico.setDataEntrega(null);
+			ordemServico.setLevarPecaSubstituida(true);
+			ordemServico.setOrcamento(orcamento);
+			_ordemServicoRepository.save(ordemServico);
+		} else if (orcamento.getServicos().size() > 0 && objBuscaOrdemServico != null) {
+			// TODO: atualizar informações
+			objBuscaOrdemServico.setDataAbertura(new Date());
+		} else {
+			_ordemServicoRepository.delete(objBuscaOrdemServico);
+		}
+		
+	*/	
+		
+		
+	}
+
 }

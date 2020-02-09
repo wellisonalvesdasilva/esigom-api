@@ -6,6 +6,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import com.esicvr.domain.Orcamento;
 import com.esicvr.domain.OrdemServico;
 
 @Repository
@@ -13,5 +14,7 @@ public interface OrdemServicoRepository extends PagingAndSortingRepository<Ordem
 	Page<OrdemServico> findAll(Specification<OrdemServico> spec, Pageable pageable);
 
 	OrdemServico findOrdemServicoById(Integer id);
+	
+	OrdemServico findOrdemServicoByOrcamento(Orcamento orcamento);
 
 }
