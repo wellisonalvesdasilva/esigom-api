@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esicvr.domain.Conta;
+import com.esicvr.domain.ContaParcela;
 import com.esicvr.service.ContaService;
 import com.esicvr.service.dto.ContaPesquisaDTO;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
@@ -45,6 +46,11 @@ public class ContaController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public boolean updatedById(@RequestBody Conta conta, @PathVariable("id") Integer id) {
 		return _contaService.update(id, conta);
+	}
+	
+	@RequestMapping(value = "/alterarContaParcela/{id}", method = RequestMethod.PUT)
+	public boolean updatedByContaParcelaId(@RequestBody ContaParcela conta, @PathVariable("id") Integer id) {
+		return _contaService.updatedByContaParcelaId(id, conta);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

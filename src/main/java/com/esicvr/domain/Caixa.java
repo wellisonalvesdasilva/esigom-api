@@ -45,7 +45,7 @@ public class Caixa implements Serializable {
 	Compra compra;
 
 	@OneToOne
-	Conta conta;
+	ContaParcela contaParcela;
 
 	public int getId() {
 		return id;
@@ -111,12 +111,12 @@ public class Caixa implements Serializable {
 		this.compra = compra;
 	}
 
-	public Conta getConta() {
-		return conta;
+	public ContaParcela getContaParcela() {
+		return contaParcela;
 	}
 
-	public void setConta(Conta conta) {
-		this.conta = conta;
+	public void setContaParcela(ContaParcela contaParcela) {
+		this.contaParcela = contaParcela;
 	}
 
 }

@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.esicvr.domain.Caixa;
+import com.esicvr.domain.Conta;
+import com.esicvr.domain.ContaParcela;
 import com.esicvr.domain.Orcamento;
 
 @Repository
@@ -17,5 +19,7 @@ public interface CaixaRepository extends JpaRepository<Caixa, Long> {
 	Page<Caixa> findAll(Specification<Caixa> objPredicates, Pageable paging);
 
 	Caixa findCaixaByOrcamento(Orcamento orcamento);
+
+	Caixa findCaixaByContaParcela(ContaParcela contaParcela);
 
 }

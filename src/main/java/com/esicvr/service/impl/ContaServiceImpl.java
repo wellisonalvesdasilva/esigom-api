@@ -1,6 +1,7 @@
 package com.esicvr.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -15,8 +16,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
+
+import com.esicvr.domain.Caixa;
+import com.esicvr.domain.CentroCusto;
 import com.esicvr.domain.Conta;
 import com.esicvr.domain.ContaParcela;
+import com.esicvr.repository.CaixaRepository;
+import com.esicvr.repository.CentroCustoRepository;
 import com.esicvr.repository.ContaParcelaRepository;
 import com.esicvr.repository.ContaRepository;
 import com.esicvr.service.ContaService;
@@ -31,6 +37,12 @@ public class ContaServiceImpl implements ContaService {
 
 	@Autowired
 	ContaParcelaRepository _contaParcelaRepository;
+
+	@Autowired
+	CaixaRepository _caixaRepository;
+
+	@Autowired
+	CentroCustoRepository _centroCustoRepository;
 
 	public Boolean save(Conta entity) {
 		if (_contaRepository.save(entity) != null) {
@@ -82,7 +94,7 @@ public class ContaServiceImpl implements ContaService {
 			obj.setSituacao(retornarSituacao(item.getSituacao()));
 			obj.setPessoa((item.getConta().getFornecedor() != null) ? (item.getConta().getFornecedor().getDescricao())
 					: (item.getConta().getCliente().getNome()));
-			obj.setIdConta(item.getConta().getId());
+			obj.setSituacaoId(item.getSituacao());
 			listaDto.add(obj);
 		}
 		retorno.setLista(listaDto);
@@ -131,6 +143,36 @@ public class ContaServiceImpl implements ContaService {
 			break;
 		}
 		return descricaoStatus;
+	}
+
+	public boolean updatedByContaParcelaId(Integer id, ContaParcela conta) {
+		ContaParcela contaParcela = _contaParcelaRepository.findContaParcelaById(id);
+		if (contaParcela != null) {
+			contaParcela = conta;
+			_contaParcelaRepository.save(contaParcela);
+
+			/* Inserção/Remoção de Informação em Acompanhar Caixa */
+			Caixa caixa = _caixaRepository.findCaixaByContaParcela(contaParcela);
+			if (caixa != null && contaParcela.getDataPagamento() == null && contaParcela.getValorPago() == null) {
+				_caixaRepository.delete(caixa);
+			} else if (caixa == null && contaParcela.getDataPagamento() != null
+					&& contaParcela.getValorPago() != null) {
+				Caixa novoObjetoCaixa = new Caixa();
+				novoObjetoCaixa
+						.setDescricao(((contaParcela.getConta().getTipo() == 1) ? ("Pagamento ") : ("Recebimento "))
+								+ "à vista de conta cód: " + contaParcela.getConta().getId() + " - parcela cód: "
+								+ contaParcela.getId());
+				novoObjetoCaixa.setDataPagamento(new Date());
+				// TODO
+				novoObjetoCaixa.setValor(contaParcela.getValorPago());
+				novoObjetoCaixa.setTipo(((contaParcela.getConta().getTipo() == 1) ? 2 : 1));
+				novoObjetoCaixa.setCentroCusto(contaParcela.getConta().getCentroCusto());
+				novoObjetoCaixa.setContaParcela(contaParcela);
+				_caixaRepository.save(novoObjetoCaixa);
+			}
+			return true;
+		}
+		return false;
 	}
 
 }
