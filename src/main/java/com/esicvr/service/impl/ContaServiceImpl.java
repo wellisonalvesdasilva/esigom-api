@@ -18,7 +18,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import com.esicvr.domain.Caixa;
-import com.esicvr.domain.CentroCusto;
 import com.esicvr.domain.Conta;
 import com.esicvr.domain.ContaParcela;
 import com.esicvr.repository.CaixaRepository;

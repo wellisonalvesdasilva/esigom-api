@@ -99,9 +99,13 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 	}
 
 	public boolean delete(Integer id) {
-		Orcamento p = _orcamentoRepository.findOrcamentoById(id);
-		if (p != null) {
-			_orcamentoRepository.delete(p);
+		Orcamento orcamento = _orcamentoRepository.findOrcamentoById(id);
+		OrdemServico ordemServico = _ordemServicoRepository.findOrdemServicoByOrcamento(orcamento);
+		if (ordemServico != null) {
+			_ordemServicoRepository.delete(ordemServico);
+		}
+		if (orcamento != null) {
+			_orcamentoRepository.delete(orcamento);
 			return true;
 		}
 		return false;
@@ -173,7 +177,7 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 
 		// CAIXA
 		Caixa objCaixa = _caixaRepository.findCaixaByOrcamento(orcamento);
-		
+
 		if (objCaixa != null && orcamento.getCodStatus() == 1) {
 			// TODO
 			objCaixa.setDataPagamento(new Date());

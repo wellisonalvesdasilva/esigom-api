@@ -15,12 +15,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.esicvr.domain.Produto;
 
 @Entity
 @Table(name = "compra_parcelamento")
 
 public class CompraParcela implements Serializable {
+
+	private static final long serialVersionUID = 472784721257255836L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +37,10 @@ public class CompraParcela implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataVencimento;
 
+	@Column(name = "data_pagamento")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dataPagamento;
+
 	@Column(name = "documento")
 	private String documento;
 
@@ -44,6 +49,25 @@ public class CompraParcela implements Serializable {
 
 	@Column(name = "valor")
 	private Double valor;
+
+	@Column(name = "valor_pago")
+	private Double valorPago;
+
+	public Date getDataPagamento() {
+		return dataPagamento;
+	}
+
+	public void setDataPagamento(Date dataPagamento) {
+		this.dataPagamento = dataPagamento;
+	}
+
+	public Double getValorPago() {
+		return valorPago;
+	}
+
+	public void setValorPago(Double valorPago) {
+		this.valorPago = valorPago;
+	}
 
 	public Integer getOrdem() {
 		return ordem;

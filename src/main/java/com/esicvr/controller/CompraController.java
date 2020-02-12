@@ -1,6 +1,8 @@
 package com.esicvr.controller;
 
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.esicvr.domain.Compra;
+import com.esicvr.domain.CompraParcela;
 import com.esicvr.service.CompraService;
 import com.esicvr.service.dto.CompraPesquisaDTO;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
+import com.esicvr.service.dto.ListaParcelasCompraDTO;
 
 @RestController
 @CrossOrigin
@@ -44,7 +48,18 @@ public class CompraController {
 	public Boolean incluirEmEstoque(@PathVariable(value = "id") Integer id) {
 		Boolean retorno = _compraService.incluirEmEstoque(id);
 		return retorno;
+	}
 
+	@RequestMapping(value = "/obterListaParcelasCompra/{id}", method = RequestMethod.GET)
+	public List<ListaParcelasCompraDTO> obterListaParcelasCompra(@PathVariable(value = "id") Integer idCompra)
+			throws ParseException {
+		List<ListaParcelasCompraDTO> retorno = _compraService.obterListaParcelasCompra(idCompra);
+		return retorno;
+	}
+
+	@RequestMapping(value = "/alterarListaCompraParcelas", method = RequestMethod.PUT)
+	public boolean updatedByListCompraParcela(@RequestBody List<CompraParcela> lista) {
+		return _compraService.updatedByListCompraParcela(lista);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)

@@ -35,15 +35,19 @@ public class Caixa implements Serializable {
 	@Column(name = "tipo")
 	private int tipo;
 
+	// optional
 	@OneToOne
 	CentroCusto centroCusto;
 
+	// optional
 	@OneToOne
 	Orcamento orcamento;
 
+	// optional
 	@OneToOne
-	Compra compra;
+	CompraParcela compraParcela;
 
+	// optional
 	@OneToOne
 	ContaParcela contaParcela;
 
@@ -103,12 +107,12 @@ public class Caixa implements Serializable {
 		this.orcamento = orcamento;
 	}
 
-	public Compra getCompra() {
-		return compra;
+	public CompraParcela getCompraParcela() {
+		return compraParcela;
 	}
 
-	public void setCompra(Compra compra) {
-		this.compra = compra;
+	public void setCompraParcela(CompraParcela compraParcela) {
+		this.compraParcela = compraParcela;
 	}
 
 	public ContaParcela getContaParcela() {

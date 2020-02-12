@@ -1,6 +1,8 @@
 package com.esicvr.service.impl;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +12,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +22,23 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
+
+import com.esicvr.domain.Caixa;
 import com.esicvr.domain.Compra;
+import com.esicvr.domain.CompraParcela;
 import com.esicvr.domain.CompraProduto;
+import com.esicvr.domain.ContaParcela;
 import com.esicvr.domain.Entrada;
 import com.esicvr.domain.EntradaProduto;
+import com.esicvr.repository.CaixaRepository;
+import com.esicvr.repository.CompraParcelaRepository;
 import com.esicvr.repository.CompraRepository;
 import com.esicvr.repository.EntradaRepository;
 import com.esicvr.service.CompraService;
 import com.esicvr.service.dto.CompraPesquisaDTO;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
+import com.esicvr.service.dto.ListaParcelasCompraDTO;
+import com.esicvr.util.FormatValues;
 
 @Component
 public class CompraServiceImpl implements CompraService {
@@ -36,7 +47,13 @@ public class CompraServiceImpl implements CompraService {
 	CompraRepository _compraRepository;
 
 	@Autowired
+	CompraParcelaRepository _compraParcelaRepository;
+
+	@Autowired
 	EntradaRepository _entradaRepository;
+
+	@Autowired
+	CaixaRepository _caixaRepository;
 
 	public Boolean save(Compra compra) {
 		if (_compraRepository.save(compra) != null) {
@@ -91,9 +108,12 @@ public class CompraServiceImpl implements CompraService {
 		return retorno;
 	}
 
+	@Transactional
 	public boolean delete(Integer id) {
 		Compra p = _compraRepository.findCompraById(id);
+		List<CompraParcela> parcelas = _compraParcelaRepository.findAllByCompra(p);
 		if (p != null) {
+			_caixaRepository.deleteAllByCompraParcela(parcelas);
 			_compraRepository.delete(p);
 			return true;
 		}
@@ -119,7 +139,7 @@ public class CompraServiceImpl implements CompraService {
 	}
 
 	public Boolean incluirEmEstoque(Integer id) {
-		
+
 		Compra compra = _compraRepository.findCompraById(id);
 		if (compra != null) {
 
@@ -129,7 +149,7 @@ public class CompraServiceImpl implements CompraService {
 			entrada.setFornecedor(compra.getFornecedor());
 
 			Set<EntradaProduto> listProdutos = new HashSet<>();
-			
+
 			for (CompraProduto item : compra.getProdutos()) {
 				EntradaProduto entradaProduto = new EntradaProduto();
 				entradaProduto.setProduto(item.getProduto());
@@ -138,10 +158,70 @@ public class CompraServiceImpl implements CompraService {
 				listProdutos.add(entradaProduto);
 			}
 			entrada.setProdutos(listProdutos);
-			
+
 			_entradaRepository.save(entrada);
 			return true;
 		}
 		return null;
+	}
+
+	public List<ListaParcelasCompraDTO> obterListaParcelasCompra(Integer idCompra) throws ParseException {
+		Compra compra = _compraRepository.findCompraById(idCompra);
+		if (compra != null) {
+			List<CompraParcela> _compraParcela = _compraParcelaRepository.findAllCompraParcelaByCompra(compra);
+
+			List<ListaParcelasCompraDTO> listaDto = new ArrayList<ListaParcelasCompraDTO>();
+			for (CompraParcela item : _compraParcela) {
+				ListaParcelasCompraDTO obj = new ListaParcelasCompraDTO();
+				BeanUtils.copyProperties(item, obj);
+				obj.setSituacao(item.getDataPagamento() != null && item.getValorPago() != null ? "Pago" : "Aberto");
+				listaDto.add(obj);
+			}
+
+			return listaDto;
+		}
+		return null;
+	}
+
+	public boolean updatedByListCompraParcela(List<CompraParcela> lista) {
+
+		if (_compraParcelaRepository.saveAll(lista) != null) {
+			for (CompraParcela compraParcela : lista) {
+
+				// verificar se existe registro em caixa
+				Caixa caixa = _caixaRepository.findCaixaByCompraParcela(compraParcela);
+
+				// criar
+				if (caixa == null && compraParcela.getDataPagamento() != null && compraParcela.getValorPago() != null) {
+					Caixa novoObjetoCaixa = new Caixa();
+					novoObjetoCaixa.setDescricao("Pagamento à vista de compra cód: " + compraParcela.getCompra().getId()
+							+ " - parcela cód: " + compraParcela.getId());
+					novoObjetoCaixa.setDataPagamento(new Date());
+					// TODO
+					novoObjetoCaixa.setValor(compraParcela.getValorPago());
+					novoObjetoCaixa.setTipo(2);
+					novoObjetoCaixa.setCentroCusto(compraParcela.getCompra().getCentroCusto());
+					novoObjetoCaixa.setCompraParcela(compraParcela);
+					_caixaRepository.save(novoObjetoCaixa);
+				}
+
+				// atualizar
+				if (caixa != null && compraParcela.getDataPagamento() != null && compraParcela.getValorPago() != null) {
+					// TODO:
+					caixa.setValor(1994.0);
+					_caixaRepository.save(caixa);
+				}
+
+				// remover
+				if (caixa != null
+						&& (compraParcela.getDataPagamento() == null || compraParcela.getValorPago() == null)) {
+					_caixaRepository.delete(caixa);
+				}
+
+			}
+			return true;
+
+		}
+		return false;
 	}
 }
