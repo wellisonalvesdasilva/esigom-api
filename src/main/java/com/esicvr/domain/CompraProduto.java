@@ -18,8 +18,6 @@ import com.esicvr.domain.Produto;
 
 public class CompraProduto implements Serializable {
 
-	private static final long serialVersionUID = -4079041033331153301L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -39,6 +37,14 @@ public class CompraProduto implements Serializable {
 
 	@Column(name = "valor_unidade")
 	private Double valorUnidade;
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
 
 	public Double getValorUnidade() {
 		return valorUnidade;
@@ -70,14 +76,6 @@ public class CompraProduto implements Serializable {
 
 	public void setCompra(Compra compra) {
 		this.compra = compra;
-	}
-
-	public Produto getProduto() {
-		return produto;
-	}
-
-	public void setProduto(Produto produto) {
-		this.produto = produto;
 	}
 
 }

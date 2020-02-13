@@ -152,7 +152,7 @@ public class CompraServiceImpl implements CompraService {
 
 			for (CompraProduto item : compra.getProdutos()) {
 				EntradaProduto entradaProduto = new EntradaProduto();
-				entradaProduto.setProduto(item.getProduto());
+				//entradaProduto.setProduto(item.getProduto());
 				entradaProduto.setQuantidade(item.getQuantidade());
 				entradaProduto.setEntrada(entrada);
 				listProdutos.add(entradaProduto);

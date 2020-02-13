@@ -20,13 +20,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "servico")
 public class Servico implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6141732459624929909L;
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 
@@ -37,7 +32,7 @@ public class Servico implements Serializable {
 	private Double valor;
 
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "servico_id")
 	private Set<OrcamentoServico> servicos;
 

@@ -13,10 +13,9 @@ import javax.persistence.Table;
 @Table(name = "centro_custo")
 public class CentroCusto implements Serializable {
 
-	private static final long serialVersionUID = 1215602530959065190L;
-
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 

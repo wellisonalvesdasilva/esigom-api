@@ -183,7 +183,7 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 			objCaixa.setDataPagamento(new Date());
 			_caixaRepository.save(objCaixa);
 		} else if (objCaixa == null && orcamento.getCodStatus() == 1) {
-			CentroCusto centroCusto = _centroCustoRepository.findCentroCustoById(13);
+			CentroCusto centroCusto = _centroCustoRepository.findCentroCustoById(1);
 			Caixa caixa = new Caixa();
 			caixa.setDescricao("Venda à vista de orçamento cód: " + orcamento.getId());
 			caixa.setDataPagamento(new Date());

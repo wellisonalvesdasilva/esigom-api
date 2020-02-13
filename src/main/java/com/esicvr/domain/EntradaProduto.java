@@ -18,7 +18,6 @@ import com.esicvr.domain.Produto;
 
 public class EntradaProduto implements Serializable {
 
-
 	private static final long serialVersionUID = 2319928631372632386L;
 
 	@Id
@@ -28,6 +27,9 @@ public class EntradaProduto implements Serializable {
 
 	@Column(name = "quantidade")
 	private int quantidade;
+
+	@Column(name = "valor_unitario")
+	private double valorUnitario;
 
 	@ManyToOne
 	@JoinColumn(name = "entrada_id")
@@ -52,6 +54,14 @@ public class EntradaProduto implements Serializable {
 
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
+	}
+
+	public double getValorUnitario() {
+		return valorUnitario;
+	}
+
+	public void setValorUnitario(double valorUnitario) {
+		this.valorUnitario = valorUnitario;
 	}
 
 	public Entrada getEntrada() {

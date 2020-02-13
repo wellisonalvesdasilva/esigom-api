@@ -21,11 +21,6 @@ import com.esicvr.domain.Servico;;
 
 public class OrcamentoServico implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2578062711933901893L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -74,10 +69,6 @@ public class OrcamentoServico implements Serializable {
 
 	public void setServico(Servico servico) {
 		this.servico = servico;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 }

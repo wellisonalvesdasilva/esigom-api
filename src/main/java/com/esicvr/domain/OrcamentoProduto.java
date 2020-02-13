@@ -18,11 +18,6 @@ import com.esicvr.domain.Produto;
 
 public class OrcamentoProduto implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7928483366680397768L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -33,7 +28,6 @@ public class OrcamentoProduto implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "orcamento_id")
-	// Envitar Problema de Recursividade
 	@JsonBackReference
 	private Orcamento orcamento;
 
@@ -43,14 +37,6 @@ public class OrcamentoProduto implements Serializable {
 
 	@Column(name = "cliente_leva_peca")
 	private Boolean clienteLevaPeca;
-
-	public Boolean getClienteLevaPeca() {
-		return clienteLevaPeca;
-	}
-
-	public void setClienteLevaPeca(Boolean clienteLevaPeca) {
-		this.clienteLevaPeca = clienteLevaPeca;
-	}
 
 	public Integer getId() {
 		return id;
@@ -84,8 +70,12 @@ public class OrcamentoProduto implements Serializable {
 		this.produto = produto;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public Boolean getClienteLevaPeca() {
+		return clienteLevaPeca;
+	}
+
+	public void setClienteLevaPeca(Boolean clienteLevaPeca) {
+		this.clienteLevaPeca = clienteLevaPeca;
 	}
 
 }

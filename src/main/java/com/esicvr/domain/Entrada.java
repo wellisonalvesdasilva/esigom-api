@@ -26,7 +26,7 @@ public class Entrada implements Serializable {
 	private static final long serialVersionUID = -2820868655938610987L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 
@@ -37,7 +37,7 @@ public class Entrada implements Serializable {
 	@Column(name = "nota_fiscal")
 	private String notaFiscal;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
 	@JoinColumn(name = "entrada_id")
 	private Set<EntradaProduto> produtos;

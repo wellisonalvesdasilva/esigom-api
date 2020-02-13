@@ -20,10 +20,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "conta")
 public class Conta implements Serializable {
 
-	private static final long serialVersionUID = -6625912966887161639L;
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 

@@ -29,8 +29,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "orcamento")
 public class Orcamento implements Serializable {
 
-	private static final long serialVersionUID = -5420093706337344612L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -70,7 +68,6 @@ public class Orcamento implements Serializable {
 	private Set<OrcamentoProduto> produtos;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	// Envitar Looping Infinito
 	@JsonManagedReference
 	@JoinColumn(name = "orcamento_id")
 	private Set<OrcamentoServico> servicos;
@@ -192,10 +189,6 @@ public class Orcamento implements Serializable {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 }

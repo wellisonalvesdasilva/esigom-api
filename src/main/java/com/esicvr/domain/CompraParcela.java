@@ -21,8 +21,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 public class CompraParcela implements Serializable {
 
-	private static final long serialVersionUID = 472784721257255836L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")

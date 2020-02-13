@@ -21,8 +21,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 public class ContaParcela implements Serializable {
 
-	private static final long serialVersionUID = -933816393768892805L;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")

@@ -14,18 +14,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "produto")
 public class Produto implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7068491891967032030L;
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 
@@ -36,22 +32,19 @@ public class Produto implements Serializable {
 	private Double valor;
 
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "produto_id")
 	private Set<OrcamentoProduto> produtos;
 
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "produto_id")
 	private Set<CompraProduto> products;
 
-	public Set<CompraProduto> getProducts() {
-		return products;
-	}
-
-	public void setProducts(Set<CompraProduto> products) {
-		this.products = products;
-	}
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "entrada_id")
+	private Set<EntradaProduto> productss;
 
 	public int getId() {
 		return id;
@@ -83,6 +76,22 @@ public class Produto implements Serializable {
 
 	public void setProdutos(Set<OrcamentoProduto> produtos) {
 		this.produtos = produtos;
+	}
+
+	public Set<CompraProduto> getProducts() {
+		return products;
+	}
+
+	public void setProducts(Set<CompraProduto> products) {
+		this.products = products;
+	}
+
+	public Set<EntradaProduto> getProductss() {
+		return productss;
+	}
+
+	public void setProductss(Set<EntradaProduto> productss) {
+		this.productss = productss;
 	}
 
 }

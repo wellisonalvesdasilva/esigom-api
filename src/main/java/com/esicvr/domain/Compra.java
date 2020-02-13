@@ -23,10 +23,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "compra")
 public class Compra implements Serializable {
 
-	private static final long serialVersionUID = 9213737419987223831L;
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 
@@ -43,12 +41,12 @@ public class Compra implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataEntrada;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
 	@JoinColumn(name = "compra_id")
 	private Set<CompraParcela> parcelas;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
 	@JoinColumn(name = "compra_id")
 	private Set<CompraProduto> produtos;

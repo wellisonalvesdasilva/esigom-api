@@ -37,9 +37,9 @@ public class OrcamentoController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Orcamento> getById(@PathVariable(value = "id") Integer id) {
+	public Orcamento getById(@PathVariable(value = "id") Integer id) {
 		Orcamento orcamento = _orcamentoService.findOrcamentoById(id);
-		return ResponseEntity.ok().body(orcamento);
+		return orcamento;
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)

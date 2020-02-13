@@ -7,25 +7,13 @@ import com.esicvr.domain.Fornecedor;
 public class EntradaPesquisaDTO {
 	private int id;
 	private Date dataInclusao;
-	private String valorEntrada;
+	private Double valorEntrada;
 	private int qtdeProdutos;
 	private String notaFiscal;
 	private Fornecedor fornecedor;
 
-	public Fornecedor getFornecedor() {
-		return fornecedor;
-	}
-
-	public void setFornecedor(Fornecedor fornecedor) {
-		this.fornecedor = fornecedor;
-	}
-
-	public String getNotaFiscal() {
-		return notaFiscal;
-	}
-
-	public void setNotaFiscal(String notaFiscal) {
-		this.notaFiscal = notaFiscal;
+	public EntradaPesquisaDTO() {
+		this.valorEntrada = 0.0;
 	}
 
 	public int getId() {
@@ -44,11 +32,11 @@ public class EntradaPesquisaDTO {
 		this.dataInclusao = dataInclusao;
 	}
 
-	public String getValorEntrada() {
+	public Double getValorEntrada() {
 		return valorEntrada;
 	}
 
-	public void setValorEntrada(String valorEntrada) {
+	public void setValorEntrada(Double valorEntrada) {
 		this.valorEntrada = valorEntrada;
 	}
 
@@ -58,6 +46,22 @@ public class EntradaPesquisaDTO {
 
 	public void setQtdeProdutos(int qtdeProdutos) {
 		this.qtdeProdutos = qtdeProdutos;
+	}
+
+	public String getNotaFiscal() {
+		return notaFiscal;
+	}
+
+	public void setNotaFiscal(String notaFiscal) {
+		this.notaFiscal = notaFiscal;
+	}
+
+	public Fornecedor getFornecedor() {
+		return fornecedor;
+	}
+
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
 	}
 
 }
