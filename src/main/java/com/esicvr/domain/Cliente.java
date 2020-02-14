@@ -22,7 +22,6 @@ import javax.persistence.TemporalType;
 @Table(name = "cliente")
 public class Cliente implements Serializable {
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -52,6 +51,10 @@ public class Cliente implements Serializable {
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "cliente_endereco", joinColumns = @JoinColumn(name = "cliente_id"), inverseJoinColumns = @JoinColumn(name = "endereco_id"))
 	private Set<Endereco> enderecos;
+
+	public Cliente() {
+		this.dthInclusao = new Date();
+	}
 
 	public int getId() {
 		return id;

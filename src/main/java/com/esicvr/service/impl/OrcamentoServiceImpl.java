@@ -89,8 +89,8 @@ public class OrcamentoServiceImpl implements OrcamentoService {
 			obj.setStatus(retornarDescricaoStatus(item.getCodStatus()));
 			// TODO
 			obj.setDataInclusao(item.getDataInclusao());
-			obj.setValorConta("R$22.000,00");
-			obj.setValorFinal("R$10.000,00");
+			obj.setValorConta("R$24.000,00");
+			obj.setValorFinal("R$14.000,00");
 			listaDto.add(obj);
 		}
 		retorno.setLista(listaDto);

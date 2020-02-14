@@ -15,7 +15,6 @@ public class OrdemServicoPesquisaDTO {
 	private String tempoGarantia;
 	private Integer codStatus;
 	private String relatorioTecnico;
-	private boolean levarPecaSubstituida;
 
 	public Integer getId() {
 		return id;
@@ -87,14 +86,6 @@ public class OrdemServicoPesquisaDTO {
 
 	public void setRelatorioTecnico(String relatorioTecnico) {
 		this.relatorioTecnico = relatorioTecnico;
-	}
-
-	public boolean isLevarPecaSubstituida() {
-		return levarPecaSubstituida;
-	}
-
-	public void setLevarPecaSubstituida(boolean levarPecaSubstituida) {
-		this.levarPecaSubstituida = levarPecaSubstituida;
 	}
 
 }

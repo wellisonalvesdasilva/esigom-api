@@ -100,6 +100,7 @@ public class CompraServiceImpl implements CompraService {
 		for (Compra item : listaEmEntidade) {
 			CompraPesquisaDTO obj = new CompraPesquisaDTO();
 			obj.setQuantidadeProdutos(item.getProdutos().size());
+			obj.setQuantidadeParcelas(item.getParcelas().size());
 			BeanUtils.copyProperties(item, obj);
 			listaDto.add(obj);
 		}

@@ -13,6 +13,7 @@ public class CompraPesquisaDTO {
 	private Fornecedor fornecedor;
 	private FormaPagamento formaPagamento;
 	private Integer quantidadeProdutos;
+	private Integer quantidadeParcelas;
 
 	public int getId() {
 		return id;
@@ -52,6 +53,14 @@ public class CompraPesquisaDTO {
 
 	public void setQuantidadeProdutos(Integer quantidadeProdutos) {
 		this.quantidadeProdutos = quantidadeProdutos;
+	}
+
+	public Integer getQuantidadeParcelas() {
+		return quantidadeParcelas;
+	}
+
+	public void setQuantidadeParcelas(Integer quantidadeParcelas) {
+		this.quantidadeParcelas = quantidadeParcelas;
 	}
 
 }

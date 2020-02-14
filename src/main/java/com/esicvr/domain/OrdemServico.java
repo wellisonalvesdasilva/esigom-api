@@ -37,6 +37,9 @@ public class OrdemServico implements Serializable {
 	@Column(name = "tempo_garantia")
 	private String tempoGarantia;
 
+	@Column(name = "obs")
+	private String obs;
+
 	@Column(name = "cod_status")
 	private Integer codStatus;
 
@@ -45,6 +48,14 @@ public class OrdemServico implements Serializable {
 
 	@Column(name = "levar_peca_substituida")
 	private boolean levarPecaSubstituida;
+
+	public String getObs() {
+		return obs;
+	}
+
+	public void setObs(String obs) {
+		this.obs = obs;
+	}
 
 	public Integer getId() {
 		return id;
