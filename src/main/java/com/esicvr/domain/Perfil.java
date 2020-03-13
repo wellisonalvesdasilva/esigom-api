@@ -1,21 +1,20 @@
 package com.esicvr.domain;
 
-import java.io.Serializable;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+
 
 @Entity
 @Table(name = "perfil")
-public class Perfil implements Serializable {
+public class Perfil implements GrantedAuthority {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,17 +24,12 @@ public class Perfil implements Serializable {
 	@Column(name = "descricao")
 	private String descricao;
 
+	/*
 	@JsonIgnore
 	@ManyToMany(mappedBy = "perfis")
 	private List<Usuario> usuarios;
-
-	public List<Usuario> getUsuarios() {
-		return usuarios;
-	}
-
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
-	}
+*/
+	
 
 	public int getId() {
 		return id;
@@ -51,6 +45,12 @@ public class Perfil implements Serializable {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	
+	@Override
+	public String getAuthority() {
+		return this.descricao;
 	}
 
 }

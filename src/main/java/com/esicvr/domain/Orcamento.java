@@ -29,6 +29,11 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "orcamento")
 public class Orcamento implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3599069602899275921L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -72,12 +77,21 @@ public class Orcamento implements Serializable {
 	@JoinColumn(name = "orcamento_id")
 	private Set<OrcamentoServico> servicos;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "orcamento_forma_pagamento", joinColumns = @JoinColumn(name = "orcamento_id"), inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
-	private Set<FormaPagamento> formasPagamento;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference
+	@JoinColumn(name = "orcamento_id")
+	private Set<OrcamentoParcela> parcelas;
 
 	@OneToOne
 	private Cliente cliente;
+
+	public Set<OrcamentoParcela> getParcelas() {
+		return parcelas;
+	}
+
+	public void setParcelas(Set<OrcamentoParcela> parcelas) {
+		this.parcelas = parcelas;
+	}
 
 	public Integer getId() {
 		return id;
@@ -173,14 +187,6 @@ public class Orcamento implements Serializable {
 
 	public void setServicos(Set<OrcamentoServico> servicos) {
 		this.servicos = servicos;
-	}
-
-	public Set<FormaPagamento> getFormasPagamento() {
-		return formasPagamento;
-	}
-
-	public void setFormasPagamento(Set<FormaPagamento> formasPagamento) {
-		this.formasPagamento = formasPagamento;
 	}
 
 	public Cliente getCliente() {

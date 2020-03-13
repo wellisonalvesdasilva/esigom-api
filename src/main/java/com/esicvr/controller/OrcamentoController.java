@@ -19,8 +19,8 @@ import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
 import com.esicvr.service.dto.OrcamentoPesquisaDTO;
 
 @RestController
-@CrossOrigin
-@RequestMapping(value = "/api/orcamentos")
+//@CrossOrigin
+@RequestMapping(value = "/operador/orcamentos")
 public class OrcamentoController {
 
 	@Autowired
@@ -31,7 +31,7 @@ public class OrcamentoController {
 		return _orcamentoService.getAllPaginated(parameters);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST)
 	public void created(@RequestBody Orcamento orcamento) throws NoSuchAlgorithmException {
 		_orcamentoService.save(orcamento);
 	}

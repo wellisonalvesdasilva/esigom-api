@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.esicvr.domain.Compra;
 import com.esicvr.domain.CompraParcela;
-import com.esicvr.domain.ContaParcela;
 import com.esicvr.service.dto.CompraPesquisaDTO;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
 import com.esicvr.service.dto.ListaParcelasCompraDTO;
@@ -31,5 +30,9 @@ public interface CompraService {
 	public List<ListaParcelasCompraDTO> obterListaParcelasCompra(Integer idCompra) throws ParseException;
 
 	public boolean updatedByListCompraParcela(List<CompraParcela> lista);
+
+	public boolean deleteCompraParcela(Integer id);
+
+	public void saveOrUpdateCompraParcela(CompraParcela compraParcela);
 
 }

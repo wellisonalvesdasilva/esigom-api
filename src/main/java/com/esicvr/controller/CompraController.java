@@ -15,14 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.esicvr.domain.Compra;
 import com.esicvr.domain.CompraParcela;
+import com.esicvr.domain.EntradaProduto;
 import com.esicvr.service.CompraService;
 import com.esicvr.service.dto.CompraPesquisaDTO;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
 import com.esicvr.service.dto.ListaParcelasCompraDTO;
 
 @RestController
-@CrossOrigin
-@RequestMapping(value = "/api/compras")
+//@CrossOrigin
+@RequestMapping(value = "/operador/compras")
 public class CompraController {
 
 	@Autowired
@@ -61,7 +62,17 @@ public class CompraController {
 	public boolean updatedByListCompraParcela(@RequestBody List<CompraParcela> lista) {
 		return _compraService.updatedByListCompraParcela(lista);
 	}
+	
+	@RequestMapping(value = "/adicionarAlterarCompraParcela", method = RequestMethod.POST)
+	public void createdCompraParcela(@RequestBody CompraParcela compraParcela) {
+		_compraService.saveOrUpdateCompraParcela(compraParcela);
+	}
 
+	@RequestMapping(value = "/excluirCompraParcela/{id}", method = RequestMethod.DELETE)
+	public boolean deleteCompraParcelaById(@PathVariable("id") Integer id) {
+		return _compraService.deleteCompraParcela(id);
+	}
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public void updatedById(@RequestBody Compra dto, @PathVariable("id") Integer id) {
 		_compraService.update(id, dto);

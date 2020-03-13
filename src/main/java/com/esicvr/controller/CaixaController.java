@@ -16,8 +16,8 @@ import com.esicvr.service.CaixaService;
 import com.esicvr.service.dto.CaixaPesquisaDTO;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
 @RestController
-@CrossOrigin
-@RequestMapping(value = "/api/caixas")
+//@CrossOrigin
+@RequestMapping(value = "/operador/caixas")
 public class CaixaController {
 
 	@Autowired

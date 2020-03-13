@@ -19,8 +19,8 @@ import com.esicvr.service.dto.FornecedorPesquisaDTO;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
 
 @RestController
-@CrossOrigin
-@RequestMapping(value = "/api/fornecedores")
+//@CrossOrigin
+@RequestMapping(value = "/operador/fornecedores")
 public class FornecedorController {
 
 	@Autowired

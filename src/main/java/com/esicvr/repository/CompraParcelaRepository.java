@@ -15,4 +15,6 @@ public interface CompraParcelaRepository extends JpaRepository<CompraParcela, Lo
 
 	List<CompraParcela> findAllByCompra(Compra p);
 
+	CompraParcela findById(Integer id);
+
 }

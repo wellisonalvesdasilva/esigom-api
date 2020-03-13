@@ -27,7 +27,6 @@ import com.esicvr.domain.Caixa;
 import com.esicvr.domain.Compra;
 import com.esicvr.domain.CompraParcela;
 import com.esicvr.domain.CompraProduto;
-import com.esicvr.domain.ContaParcela;
 import com.esicvr.domain.Entrada;
 import com.esicvr.domain.EntradaProduto;
 import com.esicvr.repository.CaixaRepository;
@@ -38,7 +37,6 @@ import com.esicvr.service.CompraService;
 import com.esicvr.service.dto.CompraPesquisaDTO;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
 import com.esicvr.service.dto.ListaParcelasCompraDTO;
-import com.esicvr.util.FormatValues;
 
 @Component
 public class CompraServiceImpl implements CompraService {
@@ -153,7 +151,7 @@ public class CompraServiceImpl implements CompraService {
 
 			for (CompraProduto item : compra.getProdutos()) {
 				EntradaProduto entradaProduto = new EntradaProduto();
-				//entradaProduto.setProduto(item.getProduto());
+				// entradaProduto.setProduto(item.getProduto());
 				entradaProduto.setQuantidade(item.getQuantidade());
 				entradaProduto.setEntrada(entrada);
 				listProdutos.add(entradaProduto);
@@ -222,6 +220,20 @@ public class CompraServiceImpl implements CompraService {
 			}
 			return true;
 
+		}
+		return false;
+	}
+
+	public void saveOrUpdateCompraParcela(CompraParcela compraParcela) {
+		_compraParcelaRepository.save(compraParcela);
+	}
+
+	public boolean deleteCompraParcela(Integer id) {
+		CompraParcela compraParcela = _compraParcelaRepository.findById(id);
+
+		if (compraParcela != null) {
+			_compraParcelaRepository.delete(compraParcela);
+			return true;
 		}
 		return false;
 	}

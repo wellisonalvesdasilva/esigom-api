@@ -23,6 +23,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Table(name = "compra")
 public class Compra implements Serializable {
 
+	private static final long serialVersionUID = -4699416460433948067L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -78,14 +80,6 @@ public class Compra implements Serializable {
 		this.centroCusto = centroCusto;
 	}
 
-	public FormaPagamento getFormaPagamento() {
-		return formaPagamento;
-	}
-
-	public void setFormaPagamento(FormaPagamento formaPagamento) {
-		this.formaPagamento = formaPagamento;
-	}
-
 	public Date getDataEntrada() {
 		return dataEntrada;
 	}
@@ -117,5 +111,15 @@ public class Compra implements Serializable {
 	public void setNotaFiscal(String notaFiscal) {
 		this.notaFiscal = notaFiscal;
 	}
+
+	public FormaPagamento getFormaPagamento() {
+		return formaPagamento;
+	}
+
+	public void setFormaPagamento(FormaPagamento formaPagamento) {
+		this.formaPagamento = formaPagamento;
+	}
+	
+	
 
 }

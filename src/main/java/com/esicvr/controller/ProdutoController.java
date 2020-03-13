@@ -19,8 +19,8 @@ import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
 import com.esicvr.service.dto.ProdutoPesquisaDTO;
 
 @RestController
-@CrossOrigin
-@RequestMapping(value = "/api/produtos")
+//@CrossOrigin
+@RequestMapping(value = "/operador/produtos")
 public class ProdutoController {
 
 	@Autowired

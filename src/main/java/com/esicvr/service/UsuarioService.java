@@ -1,6 +1,7 @@
-package com.esicvr.service;
+/*package com.esicvr.service;
 
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import com.esicvr.service.dto.UsuarioPesquisaDTO;
 @Service
 public interface UsuarioService {
 
-	public GenericoRetornoPaginadoDTO<UsuarioPesquisaDTO> getAllPaginated(Map<String, String> parameters);
+	public GenericoRetornoPaginadoDTO<UsuarioPesquisaDTO> getAllPaginated(Map<String, String> parameters) throws ParseException;
 
 	public Usuario findUsuarioById(Integer id);
 
@@ -25,3 +26,4 @@ public interface UsuarioService {
 	public boolean updateUsuarioByPassword(Integer id, String novaSenha) throws NoSuchAlgorithmException;
 
 }
+*/

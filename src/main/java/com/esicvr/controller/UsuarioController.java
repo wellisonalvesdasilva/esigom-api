@@ -1,6 +1,7 @@
-package com.esicvr.controller;
+/*package com.esicvr.controller;
 
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +20,18 @@ import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
 import com.esicvr.service.dto.UsuarioPesquisaDTO;
 
 @RestController
-@CrossOrigin
-@RequestMapping(value = "/api/usuarios")
+// @CrossOrigin
+// @CrossOrigin(origins="http://www.google.com.br")
+@RequestMapping(value = "/adm/usuarios")
 public class UsuarioController {
 
 	@Autowired
 	UsuarioService _usuarioService;
 
+	// @CrossOrigin(origins="www.google.com.br")
 	@RequestMapping(method = RequestMethod.GET)
-	public GenericoRetornoPaginadoDTO<UsuarioPesquisaDTO> getAll(@RequestParam Map<String, String> parameters) {
+	public GenericoRetornoPaginadoDTO<UsuarioPesquisaDTO> getAll(@RequestParam Map<String, String> parameters)
+			throws ParseException {
 		return _usuarioService.getAllPaginated(parameters);
 	}
 
@@ -53,9 +57,9 @@ public class UsuarioController {
 	}
 
 	@RequestMapping(value = "/alterarSenha/{id}", method = RequestMethod.PUT)
-	public boolean updatePassword(@RequestBody(required=false) String novaSenha, @PathVariable("id") Integer id)
+	public boolean updatePassword(@RequestBody(required = false) String novaSenha, @PathVariable("id") Integer id)
 			throws NoSuchAlgorithmException {
 		return _usuarioService.updateUsuarioByPassword(id, novaSenha);
 	}
 
-}
+}*/

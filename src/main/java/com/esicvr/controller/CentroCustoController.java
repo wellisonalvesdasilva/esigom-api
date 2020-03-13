@@ -20,8 +20,8 @@ import com.esicvr.service.dto.CentroCustoPesquisaDTO;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
 
 @RestController
-@CrossOrigin
-@RequestMapping(value = "/api/centrosCusto")
+//@CrossOrigin
+@RequestMapping(value = "/operador/centrosCusto")
 public class CentroCustoController {
 
 	@Autowired

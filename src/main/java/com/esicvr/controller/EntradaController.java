@@ -21,8 +21,8 @@ import com.esicvr.service.dto.EntradaProdutoDTO;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
 
 @RestController
-@CrossOrigin
-@RequestMapping(value = "/api/entradas")
+//@CrossOrigin
+@RequestMapping(value = "/operador/entradas")
 public class EntradaController {
 
 	@Autowired

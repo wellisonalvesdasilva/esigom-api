@@ -20,8 +20,8 @@ import com.esicvr.service.dto.ContaPesquisaDTO;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
 
 @RestController
-@CrossOrigin
-@RequestMapping(value = "/api/contas")
+//@CrossOrigin
+@RequestMapping(value = "/operador/contas")
 public class ContaController {
 
 	@Autowired

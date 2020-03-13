@@ -1,8 +1,6 @@
 package com.esicvr.service.dto;
 
 import java.util.Date;
-
-import com.esicvr.domain.CentroCusto;
 import com.esicvr.domain.FormaPagamento;
 import com.esicvr.domain.Fornecedor;
 
@@ -39,14 +37,6 @@ public class CompraPesquisaDTO {
 		this.fornecedor = fornecedor;
 	}
 
-	public FormaPagamento getFormaPagamento() {
-		return formaPagamento;
-	}
-
-	public void setFormaPagamento(FormaPagamento formaPagamento) {
-		this.formaPagamento = formaPagamento;
-	}
-
 	public Integer getQuantidadeProdutos() {
 		return quantidadeProdutos;
 	}
@@ -61,6 +51,14 @@ public class CompraPesquisaDTO {
 
 	public void setQuantidadeParcelas(Integer quantidadeParcelas) {
 		this.quantidadeParcelas = quantidadeParcelas;
+	}
+
+	public FormaPagamento getFormaPagamento() {
+		return formaPagamento;
+	}
+
+	public void setFormaPagamento(FormaPagamento formaPagamento) {
+		this.formaPagamento = formaPagamento;
 	}
 
 }

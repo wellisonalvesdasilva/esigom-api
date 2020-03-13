@@ -19,8 +19,8 @@ import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
 import com.esicvr.service.dto.OrdemServicoPesquisaDTO;
 
 @RestController
-@CrossOrigin
-@RequestMapping(value = "/api/os")
+//@CrossOrigin
+@RequestMapping(value = "/operador/os")
 public class OrdemServicoController {
 
 	@Autowired

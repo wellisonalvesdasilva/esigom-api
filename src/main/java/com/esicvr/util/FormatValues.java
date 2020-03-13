@@ -12,4 +12,11 @@ public class FormatValues {
 		return dataFormatada;
 
 	}
+
+	public Date formatDateStringInTypeDate(String data) throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+		String dateInString = data;
+		Date date = formatter.parse(dateInString);
+		return date;
+	}
 }
