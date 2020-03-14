@@ -66,10 +66,11 @@ public class JWTTokenAutenticacaoService {
 			obj.setAccess_token(JWT);
 			obj.setExpires_in(EXPIRATION_TIME);
 			obj.setToken_type(TOKEN_PREFIX);
+			obj.setRefresh_token("null");
 			obj.setLogin(usuario.getLogin());
 			obj.setNome(usuario.getNome().toUpperCase());
 			obj.setCod_pessoa(usuario.getId());
-			obj.setRoles(usuario.getRoles());
+			obj.setRoles(usuario.getPerfis());
 			obj.setFuncao(usuario.getFuncao());
 		}
 		/* Escreve token como responsta no corpo http */

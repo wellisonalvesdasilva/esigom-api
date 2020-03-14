@@ -1,4 +1,4 @@
-/*package com.esicvr.service;
+package com.esicvr.service;
 
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.esicvr.domain.Usuario;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
+import com.esicvr.service.dto.SalvarUsuarioDTO;
 import com.esicvr.service.dto.UsuarioPesquisaDTO;
 
 @Service
@@ -17,7 +18,7 @@ public interface UsuarioService {
 
 	public Usuario findUsuarioById(Integer id);
 
-	public void save(Usuario dto) throws NoSuchAlgorithmException;
+	public void save(SalvarUsuarioDTO dto) throws NoSuchAlgorithmException;
 
 	public void updatedUsuarioById(Integer id, Usuario dto);
 
@@ -26,4 +27,3 @@ public interface UsuarioService {
 	public boolean updateUsuarioByPassword(Integer id, String novaSenha) throws NoSuchAlgorithmException;
 
 }
-*/

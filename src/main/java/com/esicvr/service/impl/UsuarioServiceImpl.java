@@ -1,28 +1,25 @@
-/*package com.esicvr.service.impl;
+package com.esicvr.service.impl;
 
 import java.math.BigInteger;
+import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-
+import java.util.Base64;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
@@ -31,6 +28,7 @@ import com.esicvr.domain.Usuario;
 import com.esicvr.repository.UsuarioRepository;
 import com.esicvr.service.UsuarioService;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
+import com.esicvr.service.dto.SalvarUsuarioDTO;
 import com.esicvr.service.dto.UsuarioPesquisaDTO;
 import com.esicvr.util.FormatValues;
 
@@ -101,7 +99,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 			obj.setNome(item.getNome());
 			obj.setEmail(item.getEmail());
 			obj.setId(item.getId());
-			obj.setDthInclusao(item.getDthInclusao());
+			obj.setDthInclusao(item.getDth_inclusao());
 			obj.setLogin(item.getLogin());
 			listaDto.add(obj);
 		}
@@ -115,15 +113,18 @@ public class UsuarioServiceImpl implements UsuarioService {
 		return _usuarioRepository.findUsuarioById(id);
 	}
 
-	public void save(Usuario entity) throws NoSuchAlgorithmException {
+	public void save(SalvarUsuarioDTO dto) throws NoSuchAlgorithmException {
 
-		// Armazenar a Senha em MD5
-		String s = entity.getSenha();
-		MessageDigest m = MessageDigest.getInstance("MD5");
-		m.update(s.getBytes(), 0, s.length());
-		entity.setSenha(new BigInteger(1, m.digest()).toString(16));
-
-		_usuarioRepository.save(entity);
+		Usuario usuario = new Usuario();
+		BeanUtils.copyProperties(dto, usuario);
+		
+		// Senha Padrão Spring
+		usuario.setSenha(new BCryptPasswordEncoder().encode(dto.getSenha()));
+	
+		// Blob
+		usuario.setImg(dto.getImg().getBytes());
+		
+		_usuarioRepository.save(usuario);
 	}
 
 	public void updatedUsuarioById(Integer id, Usuario entity) {
@@ -164,4 +165,4 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 		return false;
 	}
-}*/
+}

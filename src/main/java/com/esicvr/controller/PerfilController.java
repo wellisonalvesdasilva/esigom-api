@@ -40,7 +40,7 @@ public class PerfilController {
 		Perfil perfil = _perfilService.findPerfilById(id);
 		return ResponseEntity.ok().body(perfil);
 	}
-
+	/*
 	@RequestMapping(method = RequestMethod.POST)
 	public void created(@RequestBody Perfil dto) {
 		_perfilService.save(dto);
@@ -54,6 +54,6 @@ public class PerfilController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public boolean deleteById(@PathVariable("id") Integer id) {
 		return _perfilService.delete(id);
-	}
+	}*/
 
 }

@@ -1,10 +1,8 @@
 package com.esicvr.domain;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
@@ -15,8 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -30,43 +30,53 @@ public class Usuario implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(unique = true)
 	private String login;
-
+	private String email;
 	private String senha;
-
 	private String nome;
-	
 	private String funcao;
+	
+	@Lob
+	private byte[] img;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dth_inclusao;
+	
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "usuario_role", uniqueConstraints = @UniqueConstraint(columnNames = { "usuario_id",
-			"role_id" }, name = "unique_role_user") , joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id", table = "usuario", unique = false, foreignKey = @ForeignKey(name = "usuario_fk", value = ConstraintMode.CONSTRAINT) ) ,
+	@JoinTable(name = "usuario_perfil", uniqueConstraints = @UniqueConstraint(columnNames = { "usuario_id",
+			"perfil_id" }, name = "unique_perfil_user") , joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id", table = "usuario", unique = false, foreignKey = @ForeignKey(name = "usuario_fk", value = ConstraintMode.CONSTRAINT) ) ,
+	inverseJoinColumns = @JoinColumn(name = "perfil_id", referencedColumnName = "id", table = "perfil", unique = false, updatable = false, foreignKey = @ForeignKey(name = "perfil_fk", value = ConstraintMode.CONSTRAINT) ) )
+	private List<Perfil> perfis; /* Os papeis ou acessos */
 
-	inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id", table = "role", unique = false, updatable = false, foreignKey = @ForeignKey(name = "role_fk", value = ConstraintMode.CONSTRAINT) ) )
-	private List<Role> roles; /* Os papeis ou acessos */
+	
 
-	
-	
-	
-	
+
+	public byte[] getImg() {
+		return img;
+	}
+
+	public void setImg(byte[] img) {
+		this.img = img;
+	}
+
+	public List<Perfil> getPerfis() {
+		return perfis;
+	}
+
+	public void setPerfis(List<Perfil> perfis) {
+		this.perfis = perfis;
+	}
+
 	public String getFuncao() {
 		return funcao;
 	}
 
 	public void setFuncao(String funcao) {
 		this.funcao = funcao;
-	}
-
-	public List<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
 	}
 
 	public Long getId() {
@@ -100,6 +110,25 @@ public class Usuario implements UserDetails {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	
+
+	public Date getDth_inclusao() {
+		return dth_inclusao;
+	}
+
+	public void setDth_inclusao(Date dth_inclusao) {
+		this.dth_inclusao = dth_inclusao;
+	}
 
 	@Override
 	public int hashCode() {
@@ -126,11 +155,9 @@ public class Usuario implements UserDetails {
 		return true;
 	}
 
-	/* São os acessos do usuário ROLE_ADMIN OU ROLE_VISITANTE */
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-
-		return roles;
+		return perfis;
 	}
 
 	@JsonIgnore

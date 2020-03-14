@@ -12,7 +12,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.esicvr.service.impl.ImplementacaoUserDetailsSercice;
+import com.esicvr.service.impl.ImplementacaoUserDetailsService;
 
 /*Mapeaia URL, enderecos, autoriza ou bloqueia acessoa a URL*/
 @Configuration
@@ -20,7 +20,7 @@ import com.esicvr.service.impl.ImplementacaoUserDetailsSercice;
 public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private ImplementacaoUserDetailsSercice implementacaoUserDetailsSercice;
+	private ImplementacaoUserDetailsService implementacaoUserDetailsService;
 
 	/* Configura as solicitações de acesso por Http */
 	@Override
@@ -34,8 +34,8 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 		
 		/* CONTROLE POR ROLES */
-		.antMatchers("/adm/**").hasAnyAuthority("ROLE_ADMINISTRADOR")
-		.antMatchers("/operador/**").hasAnyAuthority("ROLE_OPERADOR","ROLE_ADMINISTRADOR")
+		.antMatchers("/adm/**").hasAnyAuthority("PERF_ADMINISTRADOR")
+		.antMatchers("/operador/**").hasAnyAuthority("PERF_USUARIO_COMUM","PERF_ADMINISTRADOR")
 			
 		/* URL de Logout - Redireciona após o user deslogar do sistema */
 		.anyRequest().authenticated().and().logout().logoutSuccessUrl("/index")
@@ -55,7 +55,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
 		/* Service que irá consultar o usuário no banco de dados */
-		auth.userDetailsService(implementacaoUserDetailsSercice)
+		auth.userDetailsService(implementacaoUserDetailsService)
 
 		/* Padrão de codigição de senha */
 		.passwordEncoder(new BCryptPasswordEncoder());

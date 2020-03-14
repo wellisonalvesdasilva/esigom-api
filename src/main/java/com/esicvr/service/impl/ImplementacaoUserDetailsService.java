@@ -10,7 +10,7 @@ import com.esicvr.domain.Usuario;
 import com.esicvr.repository.UsuarioRepository;
 
 @Service
-public class ImplementacaoUserDetailsSercice implements UserDetailsService {
+public class ImplementacaoUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;

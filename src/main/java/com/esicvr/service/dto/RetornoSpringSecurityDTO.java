@@ -2,18 +2,27 @@ package com.esicvr.service.dto;
 
 import java.util.List;
 
-import com.esicvr.domain.Role;
+import com.esicvr.domain.Perfil;
 
 public class RetornoSpringSecurityDTO {
 
 	public String access_token;
+	public String refresh_token;
 	public Long expires_in;
 	public String token_type;
 	public String login;
 	public Long cod_pessoa;
 	public String nome;
 	public String funcao;
-	private List<Role> roles;
+	private List<Perfil> roles;
+
+	public String getRefresh_token() {
+		return refresh_token;
+	}
+
+	public void setRefresh_token(String refresh_token) {
+		this.refresh_token = refresh_token;
+	}
 
 	public String getFuncao() {
 		return funcao;
@@ -71,12 +80,13 @@ public class RetornoSpringSecurityDTO {
 		this.nome = nome;
 	}
 
-	public List<Role> getRoles() {
+	public List<Perfil> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<Role> roles) {
+	public void setRoles(List<Perfil> roles) {
 		this.roles = roles;
 	}
+
 
 }

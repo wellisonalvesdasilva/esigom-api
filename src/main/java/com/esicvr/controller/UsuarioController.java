@@ -1,4 +1,4 @@
-/*package com.esicvr.controller;
+package com.esicvr.controller;
 
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.esicvr.domain.Usuario;
 import com.esicvr.service.UsuarioService;
 import com.esicvr.service.dto.GenericoRetornoPaginadoDTO;
+import com.esicvr.service.dto.SalvarUsuarioDTO;
 import com.esicvr.service.dto.UsuarioPesquisaDTO;
 
 @RestController
@@ -42,7 +43,7 @@ public class UsuarioController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public void created(@RequestBody Usuario dto) throws NoSuchAlgorithmException {
+	public void created(@RequestBody SalvarUsuarioDTO dto) throws NoSuchAlgorithmException {
 		_usuarioService.save(dto);
 	}
 
@@ -62,4 +63,4 @@ public class UsuarioController {
 		return _usuarioService.updateUsuarioByPassword(id, novaSenha);
 	}
 
-}*/
+}
