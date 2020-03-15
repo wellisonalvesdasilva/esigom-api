@@ -1,17 +1,17 @@
 package com.esicvr.security;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.sql.SQLException;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.sql.rowset.serial.SerialException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
 import com.esicvr.domain.Usuario;
 import com.esicvr.repository.UsuarioRepository;
 import com.esicvr.service.dto.RetornoSpringSecurityDTO;
@@ -38,7 +38,8 @@ public class JWTTokenAutenticacaoService {
 	private static final String HEADER_STRING = "Authorization";
 
 	/* Gerando token de autenticado e adiconando ao cabeçalho e resposta Http */
-	public void addAuthentication(HttpServletResponse response, String username) throws IOException {
+	public void addAuthentication(HttpServletResponse response, String username)
+			throws IOException, SerialException, SQLException {
 
 		/* Montagem do Token */
 		String JWT = Jwts.builder() /* Chama o gerador de Token */
@@ -66,19 +67,19 @@ public class JWTTokenAutenticacaoService {
 			obj.setAccess_token(JWT);
 			obj.setExpires_in(EXPIRATION_TIME);
 			obj.setToken_type(TOKEN_PREFIX);
-			obj.setRefresh_token("null");
 			obj.setLogin(usuario.getLogin());
 			obj.setNome(usuario.getNome().toUpperCase());
+			obj.setFuncao(usuario.getFuncao());
 			obj.setCod_pessoa(usuario.getId());
 			obj.setRoles(usuario.getPerfis());
-			obj.setFuncao(usuario.getFuncao());
+			obj.setImg_perfil_base64(new String(usuario.getImg(), Charset.forName("UTF-8")));
+
 		}
-		/* Escreve token como responsta no corpo http */
+
+		/* Disponibilizar DTO para Retorno em formato JSON com Charset UTF-8 */
 		ObjectMapper mapper = new ObjectMapper();
+		response.setContentType("application/json;charset=UTF-8");
 		response.getWriter().write(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj));
-
-		// response.getWriter().write("{\"Authorization\": \"" + token + "\"}");
-
 	}
 
 	/*
@@ -119,7 +120,7 @@ public class JWTTokenAutenticacaoService {
 		}
 
 		if (response.getHeader("Access-Control-Allow-Methods") == null) {
-			response.addHeader("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
+			response.addHeader("Access-Control-Allow-Methods", "DELETE, POST, GET, PUT, OPTIONS");
 		}
 
 		if (response.getHeader("Access-Control-Allow-Headers") == null) {

@@ -48,7 +48,7 @@ public class UsuarioController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public void updatedById(@RequestBody Usuario dto, @PathVariable("id") Integer id) {
+	public void updatedById(@RequestBody SalvarUsuarioDTO dto, @PathVariable("id") Integer id) {
 		_usuarioService.updatedUsuarioById(id, dto);
 	}
 

@@ -3,17 +3,19 @@ package com.esicvr.service.dto;
 import java.util.Date;
 
 public class UsuarioPesquisaDTO {
-	private Long id;
+	private int id;
 	private String nome;
 	private String login;
 	private String email;
 	private Date dthInclusao;
 
-	public Long getId() {
+
+
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

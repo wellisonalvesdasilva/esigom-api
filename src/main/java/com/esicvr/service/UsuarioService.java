@@ -20,7 +20,7 @@ public interface UsuarioService {
 
 	public void save(SalvarUsuarioDTO dto) throws NoSuchAlgorithmException;
 
-	public void updatedUsuarioById(Integer id, Usuario dto);
+	public void updatedUsuarioById(Integer id, SalvarUsuarioDTO dto);
 
 	public boolean deleteUsuarioById(Integer id);
 

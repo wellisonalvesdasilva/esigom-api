@@ -1,6 +1,7 @@
 package com.esicvr.security;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -48,7 +49,12 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
 
-		new JWTTokenAutenticacaoService().addAuthentication(response, authResult.getName());
+		try {
+			new JWTTokenAutenticacaoService().addAuthentication(response, authResult.getName());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

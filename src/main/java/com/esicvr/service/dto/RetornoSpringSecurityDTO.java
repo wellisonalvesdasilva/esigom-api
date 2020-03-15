@@ -7,21 +7,22 @@ import com.esicvr.domain.Perfil;
 public class RetornoSpringSecurityDTO {
 
 	public String access_token;
-	public String refresh_token;
+	// public String refresh_token;
 	public Long expires_in;
 	public String token_type;
 	public String login;
-	public Long cod_pessoa;
+	public int cod_pessoa;
 	public String nome;
 	public String funcao;
+	private String img_perfil_base64;
 	private List<Perfil> roles;
 
-	public String getRefresh_token() {
-		return refresh_token;
+	public String getImg_perfil_base64() {
+		return img_perfil_base64;
 	}
 
-	public void setRefresh_token(String refresh_token) {
-		this.refresh_token = refresh_token;
+	public void setImg_perfil_base64(String img_perfil_base64) {
+		this.img_perfil_base64 = img_perfil_base64;
 	}
 
 	public String getFuncao() {
@@ -64,11 +65,11 @@ public class RetornoSpringSecurityDTO {
 		this.login = login;
 	}
 
-	public Long getCod_pessoa() {
+	public int getCod_pessoa() {
 		return cod_pessoa;
 	}
 
-	public void setCod_pessoa(Long cod_pessoa) {
+	public void setCod_pessoa(int cod_pessoa) {
 		this.cod_pessoa = cod_pessoa;
 	}
 
@@ -87,6 +88,5 @@ public class RetornoSpringSecurityDTO {
 	public void setRoles(List<Perfil> roles) {
 		this.roles = roles;
 	}
-
 
 }

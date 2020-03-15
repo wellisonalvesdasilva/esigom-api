@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Base64;
+import java.util.Date;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -115,23 +117,32 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	public void save(SalvarUsuarioDTO dto) throws NoSuchAlgorithmException {
 
+		// Converter DTO em Objeto Entidade
 		Usuario usuario = new Usuario();
 		BeanUtils.copyProperties(dto, usuario);
-		
-		// Senha Padrão Spring
+
+		// Armazenar Senha no Método de Crypt do Spring Security
 		usuario.setSenha(new BCryptPasswordEncoder().encode(dto.getSenha()));
-	
-		// Blob
+
+		// Armazenar Imagem em Byte[]
 		usuario.setImg(dto.getImg().getBytes());
-		
+
+		// Salvar Objeto Entidade
 		_usuarioRepository.save(usuario);
 	}
 
-	public void updatedUsuarioById(Integer id, Usuario entity) {
-		Usuario objParaEdicao = _usuarioRepository.findUsuarioById(id);
-		if (objParaEdicao != null) {
-			objParaEdicao = entity;
-			_usuarioRepository.save(objParaEdicao);
+	public void updatedUsuarioById(Integer id, SalvarUsuarioDTO dto) {
+		Usuario usuario = _usuarioRepository.findUsuarioById(id);
+		if (usuario != null) {
+			BeanUtils.copyProperties(dto, usuario);
+
+			// Realizar Crypt na Senha, caso for alterada
+			if (dto.getSenha() != usuario.getSenha()) {
+				usuario.setSenha(new BCryptPasswordEncoder().encode(dto.getSenha()));
+			}
+
+			usuario.setImg(dto.getImg().getBytes());
+			_usuarioRepository.save(usuario);
 		}
 	}
 
