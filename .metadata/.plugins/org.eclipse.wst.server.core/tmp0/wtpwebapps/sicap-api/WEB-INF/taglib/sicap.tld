@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd">
+	<tlib-version>1.0</tlib-version>
+	<short-name>tce</short-name>
+	<uri>/WEB-INF/taglib/sicap</uri>
+	
+	<tag>
+		<name>situacaoInscrito</name>
+		<body-content>empty</body-content>
+		<info>Formatar Modalidade Concurso</info>
+		<tag-class>br.gov.ms.tce.sicap.util.tag.SituacaoInscrito</tag-class>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+			<body-content>empty</body-content>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>admissaoInscrito</name>
+		<body-content>empty</body-content>
+		<info>Formatar Modalidade Concurso</info>
+		<tag-class>br.gov.ms.tce.sicap.util.tag.AdmissaoInscritoTag</tag-class>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+			<body-content>empty</body-content>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>modalidadeConcurso</name>
+		<body-content>empty</body-content>
+		<info>Formatar Modalidade Concurso</info>
+		<tag-class>br.gov.ms.tce.sicap.util.tag.ModalidadeConcursoTag</tag-class>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+			<body-content>empty</body-content>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>tipoCargo</name>
+		<body-content>empty</body-content>
+		<info>Formatar Escolaridade</info>
+		<tag-class>br.gov.ms.tce.sicap.util.tag.TipoCargoTag</tag-class>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+			<body-content>empty</body-content>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>situacaoImportacaoDescricao</name>
+		<body-content>empty</body-content>
+		<info>Formatar Situação da Importação Descrição</info>
+		<tag-class>br.gov.ms.tce.sicap.util.tag.SituacaoImportacaoDescricaoTag</tag-class>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+			<body-content>empty</body-content>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>escolaridade</name>
+		<body-content>empty</body-content>
+		<info>Formatar Escolaridade</info>
+		<tag-class>br.gov.ms.tce.sicap.util.tag.EscolaridadeTag</tag-class>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+			<body-content>empty</body-content>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>situacaoImportacao</name>
+		<body-content>empty</body-content>
+		<info>Formatar a Situação da Importação</info>
+		<tag-class>br.gov.ms.tce.sicap.util.tag.SituacaoImportacaoTag</tag-class>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+			<body-content>empty</body-content>
+		</attribute>
+	</tag>
+	
+	
+	<tag>
+		<name>tipoVacancia</name>
+		<body-content>empty</body-content>
+		<info>Formatar o tipo da vacância</info>
+		<tag-class>br.gov.ms.tce.sicap.util.tag.VacanciaTag</tag-class>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+			<body-content>empty</body-content>
+		</attribute>
+	</tag>
+	
+	
+	<tag>
+		<name>tipoImportacao</name>
+		<body-content>empty</body-content>
+		<info>Formatar o tipo da Importação</info>
+		<tag-class>br.gov.ms.tce.sicap.util.tag.TipoImportacaoTag</tag-class>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+			<body-content>empty</body-content>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>tipoRemuneracao</name>
+		<body-content>empty</body-content>
+		<info>Formatar o tipo remuneração</info>
+		<tag-class>br.gov.ms.tce.sicap.util.tag.TipoRemuneracaoTag</tag-class>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+			<body-content>empty</body-content>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>tipoEnvio</name>
+		<body-content>empty</body-content>
+		<info>Formatar o tipo Envio</info>
+		<tag-class>br.gov.ms.tce.sicap.util.tag.TipoEnvioTag</tag-class>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+			<body-content>empty</body-content>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>usuarioLogado</name>
+		<body-content>empty</body-content>
+		<info>Buscar usuário Logado</info>
+		<tag-class>br.gov.ms.tce.sicap.util.tag.UsuarioLogadoTag</tag-class>
+	</tag>
+	
+	<tag>
+		<name>alertaIntimacao</name>
+		<body-content>empty</body-content>
+		<info>Quantidade de Intimação</info>
+		<tag-class>br.gov.ms.tce.sicap.util.tag.AlertaIntimacaoTag</tag-class>
+	</tag>
+	
+	<tag>
+		<name>alertaRecusa</name>
+		<body-content>empty</body-content>
+		<info>Quantidade de Recusa</info>
+		<tag-class>br.gov.ms.tce.sicap.util.tag.AlertaRecusaTag</tag-class>
+	</tag>	
+	
+	<tag>
+		<name>situacaoIntimacao</name>
+		<body-content>empty</body-content>
+		<info>Situação de importacao</info>
+		<tag-class>br.gov.ms.tce.sicap.util.tag.SituacaoIntimacao</tag-class>
+		<attribute>
+			<name>situacao</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+			<body-content>empty</body-content>
+		</attribute>
+		<attribute>
+			<name>codIntimacao</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+			<body-content>empty</body-content>
+		</attribute>
+	</tag>
+	
+	
+	<tag>
+		<name>tipoProvimento</name>
+		<body-content>empty</body-content>
+		<info>Formatar o tipo de provimento</info>
+		<tag-class>br.gov.ms.tce.sicap.util.tag.TipoProvimentoTag</tag-class>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+			<body-content>empty</body-content>
+		</attribute>
+	</tag>
+	
+	
+	<tag>
+		<name>tipoAdmissao</name>
+		<body-content>empty</body-content>
+		<info>Formatar o tipo admissao</info>
+		<tag-class>br.gov.ms.tce.sicap.util.tag.TipoAdmissaoTag</tag-class>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+			<body-content>empty</body-content>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>situacaoAdmissao</name>
+		<body-content>empty</body-content>
+		<info>Situação admissao</info>
+		<tag-class>br.gov.ms.tce.sicap.util.tag.SituacaoAdmissaoTag</tag-class>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+			<body-content>empty</body-content>
+		</attribute>
+	</tag>
+	
+</taglib>

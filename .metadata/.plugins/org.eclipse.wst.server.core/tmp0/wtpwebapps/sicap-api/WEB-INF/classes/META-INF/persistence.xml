@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="persistenceUnit"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+		<!-- Importações -->
+		<class>br.gov.ms.tce.sicap.persistence.model.DocumentoSicap</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.Remessa</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.Importacao</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.TipoRemessa</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.Intimacao</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.Admissao</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.Pessoa</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.CargoAtributo</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.Cargo</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.Grupo</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.Erro</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.Concurso</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.ConcursoVagas</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.RegimeJuridico</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.Inscrito</class>
+
+		<!-- Folha de Pagamento -->
+		<class>br.gov.ms.tce.sicap.persistence.model.FolhaPagamento</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.Servidor</class>
+		<!-- LOG -->
+		<class>br.gov.ms.tce.sicap.persistence.model.Log</class>
+
+		<!-- Relatório Vacância -->
+		<class>br.gov.ms.tce.sicap.persistence.model.Vacancia</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.TipoVacancia</class>
+
+		<!-- Gerenciamento de Funcionários e de Perfis -->
+		<class>br.gov.ms.tce.sicap.persistence.model.UsuarioSicap</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.Perfil</class>
+
+		<!-- Views -->
+		<class>br.gov.ms.tce.sicap.persistence.model.views.VwFolhaPagamento</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.views.VwFolhaPagamentoServidor</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.views.VwRemuneracaoTipo</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.views.VwCargoEspecificacao</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.views.VwInscritoAdmissao</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.views.VwDocumentoAto</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.views.VwRemessaRecusa</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.views.VwDetalheResponsavel</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.views.VwPesquisaDeProcessosEtce</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.views.VwRemessasDescartadas</class>
+
+		<!-- Quadro de Avisos -->
+		<class>br.gov.ms.tce.sicap.persistence.model.views.VwResponsaveisCjur</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.UsuarioQuadroAvisoUg</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.UsuarioInternoQuadroAviso</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.QuadroAvisoUg</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.QuadroAviso</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.views.VwPessoa</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.views.VwUnidadeGestora</class>
+
+		<!-- Retificação de Remessa -->
+		<class>br.gov.ms.tce.sicap.persistence.model.SolicitacaoRetificacao</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.SolicitacaoRetificacaoRemessa</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.SolicitacaoRetificacaoHistorico</class>
+
+		<!-- Alterações 2019 -->
+		<class>br.gov.ms.tce.sicap.persistence.model.ImportacaoDocumentoAdicional</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.JustificativaNaoEnvioFebraban</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.PerfilAcaoPerfil</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.AcaoPerfil</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.UsuarioPerfil</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.EnvioEmail</class>
+		<class>br.gov.ms.tce.sicap.persistence.model.LegislacaoTipo</class>
+
+
+		<properties>
+			<property name="hibernate.archive.autodetection" value="class, hbm" />
+			<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/> -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect" />
+			<property name="hibernate.hbm2ddl.auto" value="validate" />
+			<property name="hibernate.connection.charSet" value="UTF-8" />
+		</properties>
+	</persistence-unit>
+</persistence>

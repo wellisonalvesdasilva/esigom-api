@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reciboRemessa" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.3310000000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="127"/>
+	<parameter name="REPORT_PARAMETERS_IMG" class="java.lang.String"/>
+	<field name="codRemessa" class="java.lang.String"/>
+	<field name="nomeUsuario" class="java.lang.String"/>
+	<field name="unidadeGestoraEmitente" class="java.lang.String"/>
+	<field name="tipoEntrada" class="java.lang.String"/>
+	<field name="dataEnvio" class="java.lang.String"/>
+	<field name="meioEntrega" class="java.lang.String"/>
+	<field name="dataAtualFormatada" class="java.lang.String"/>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="logo" class="java.lang.String"/>
+	<field name="codImportacao" class="java.lang.String"/>
+	<field name="situacao" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="129" splitType="Stretch">
+			<image>
+				<reportElement x="214" y="16" width="147" height="71"/>
+				<imageExpression><![CDATA[$P{REPORT_PARAMETERS_IMG}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="214" y="96" width="127" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Recibo de Remessa]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="265" splitType="Stretch">
+			<textField>
+				<reportElement x="169" y="88" width="386" height="17"/>
+				<textElement>
+					<font fontName="SansSerif" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoEntrada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="169" y="212" width="386" height="48"/>
+				<textElement>
+					<font fontName="SansSerif" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{unidadeGestoraEmitente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="70" y="137" width="90" height="17"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="11"/>
+				</textElement>
+				<text><![CDATA[  Usuário:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="169" y="161" width="386" height="16"/>
+				<textElement>
+					<font fontName="SansSerif" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataEnvio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="169" y="64" width="386" height="16"/>
+				<textElement>
+					<font fontName="SansSerif" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codRemessa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="30" y="185" width="130" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="11"/>
+				</textElement>
+				<text><![CDATA[    Meio de Entrega:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="64" width="140" height="16"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="11"/>
+				</textElement>
+				<text><![CDATA[Número da Remessa:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="161" width="130" height="17"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="11"/>
+				</textElement>
+				<text><![CDATA[ Data de Envio:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="88" width="130" height="17"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="11"/>
+				</textElement>
+				<text><![CDATA[  Tipo de Importação:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="212" width="140" height="16"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="11"/>
+				</textElement>
+				<text><![CDATA[Unidade Gestora Emitente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="169" y="137" width="386" height="17"/>
+				<textElement>
+					<font fontName="SansSerif" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomeUsuario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="169" y="185" width="386" height="20"/>
+				<textElement>
+					<font fontName="SansSerif" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{meioEntrega}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="114" width="140" height="16"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="11"/>
+				</textElement>
+				<text><![CDATA[  Descrição da Remessa:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="169" y="114" width="386" height="16"/>
+				<textElement>
+					<font fontName="SansSerif" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="13" width="140" height="16"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="11"/>
+				</textElement>
+				<text><![CDATA[Número da Importação:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="169" y="13" width="386" height="16"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codImportacao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="37" width="140" height="16"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="11"/>
+				</textElement>
+				<text><![CDATA[Situação:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="169" y="37" width="386" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{situacao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<columnFooter>
+		<band height="29" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="65" y="0" width="443" height="16"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="12" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[SICAP - Sistema Informatizado de Controle de Atos de Pessoal]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a" isBlankWhenNull="true">
+				<reportElement x="65" y="16" width="443" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Data/Hora geração do Recibo de Remessa: "+$F{dataAtualFormatada}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

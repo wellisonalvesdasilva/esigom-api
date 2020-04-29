@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete 8 resources" deleteContents="false" description="Delete 8 resources" element1="/Servers" element2="/sicap" element3="/sicap-api" element4="/sicap-model" element5="/sicap-schedule" element6="/sicap-web-service" element7="/sicap-webadm" element8="/sicap-webapp" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="8" stamp="1588172570412"/>
+</session>

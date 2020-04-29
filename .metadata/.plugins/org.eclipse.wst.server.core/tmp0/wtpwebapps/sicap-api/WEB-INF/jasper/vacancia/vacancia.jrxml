@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vacancia" pageWidth="845" pageHeight="595" orientation="Landscape" columnWidth="805" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.9487171000001817"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.style.evaluation.time.enabled" value="true"/>
+	<style name="table" mode="Opaque" pdfFontName="Helvetica">
+		<pen lineWidth="0.25" lineColor="#EAEAEA"/>
+		<box>
+			<pen lineWidth="0.25" lineColor="#EAEAEA"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF" pdfFontName="Helvetica" isPdfEmbedded="true">
+		<pen lineWidth="0.0"/>
+		<box>
+			<pen lineWidth="0.25" lineColor="#EAEAEA"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#EAEAEA" pdfFontName="Helvetica" isPdfEmbedded="true">
+		<box>
+			<pen lineWidth="0.25" lineColor="#EAEAEA"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF" pdfFontName="Helvetica" isPdfEmbedded="true">
+		<box>
+			<pen lineWidth="0.25" lineColor="#EAEAEA"/>
+		</box>
+	</style>
+	<subDataset name="Listagem de Vacâncias">
+		<parameter name="COD_UG" class="java.lang.Integer"/>
+		<parameter name="PARAM_COD_ADMISSAO" class="java.lang.Integer"/>
+		<parameter name="PARAM_COD_CPF" class="java.lang.String"/>
+		<parameter name="PARAM_TIPO_VACANCIA" class="java.lang.Integer"/>
+		<parameter name="PARAM_NOME" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT
+va.COD 'CodigoVacancia',
+p.nome 'Servidor',
+case when Len(p.cpf) <= 11 then (left (p.cpf,3)+'.'+
+		       	right(left (p.cpf,6),3)+'.'+
+		       	right(left (p.cpf,9),3)+'-'+
+		       	right(left (p.cpf,12),2))
+		when Len(p.cpf) >  11 then (left (p.cpf,2)+'.'+
+		       	right(left (p.cpf,5),3)+'.'+
+			right(left (p.cpf,8),3)+'/'+
+			right(left (p.cpf,12),4)+'-'+
+			right(left (p.cpf,14),2))
+	       end CPF,
+ad.matricula+'-'+ad.dv_matricula 'Matricula',
+tp.descricao 'TipoVacancia',
+Convert(varchar,va.data_vacancia,103) as DataVacancia,
+CASE WHEN va.descartado is null THEN 'Ativo'
+	ELSE 'Cancelado'
+END AS Situacao
+FROM Sicap.sicap2.vacancia va
+join sicap.sicap2.admissao ad on va.admissao_COD = ad.COD
+LEFT JOIN sicap.sicap2.cargo_atributo ca on ad.cargo_atributo_COD =  ca.COD
+LEFT JOIN sicap.sicap2.cargo c on c.COD = ca.cargo_COD
+JOIN sicap.sicap2.tipo_vacancia tp on tp.COD  = va.tipo_vacancia_COD
+JOIN sicap.sicap2.pessoa p on ad.pessoa_COD = p.COD
+JOIN sicap.sicap2.remessa re on re.COD = ad.remessa_COD
+where ad.cod_ug = $P!{COD_UG}
+and ($P{PARAM_COD_ADMISSAO} is null or ad."cod" = $P{PARAM_COD_ADMISSAO})
+and ($P{PARAM_COD_CPF} is null or p."cpf" = $P{PARAM_COD_CPF})
+and ($P{PARAM_TIPO_VACANCIA} is null or tp."cod" = $P{PARAM_TIPO_VACANCIA})
+and ($P{PARAM_NOME} is null or p."nome" like  '%$P!{PARAM_NOME}%' )
+order by va.COD desc]]>
+		</queryString>
+		<field name="CodigoVacancia" class="java.lang.Integer"/>
+		<field name="Servidor" class="java.lang.String"/>
+		<field name="CPF" class="java.lang.String"/>
+		<field name="Matricula" class="java.lang.String"/>
+		<field name="TipoVacancia" class="java.lang.String"/>
+		<field name="DataVacancia" class="java.lang.String"/>
+		<field name="Situacao" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="COD_UG" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATA_HORA_GERACAO" class="java.lang.String"/>
+	<parameter name="LOGO_TCE" class="java.lang.String"/>
+	<parameter name="PARAM_COD_ADMISSAO" class="java.lang.Integer"/>
+	<parameter name="PARAM_COD_CPF" class="java.lang.String"/>
+	<parameter name="PARAM_NOME" class="java.lang.String"/>
+	<parameter name="PARAM_TIPO_VACANCIA" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT * FROM sicap.sicap2.vw_unidade_gestora where cod_ug = $P!{COD_UG}]]>
+	</queryString>
+	<field name="nome_ug" class="java.lang.String"/>
+	<title>
+		<band height="83" splitType="Stretch">
+			<image isLazy="true">
+				<reportElement positionType="Float" x="1" y="1" width="140" height="74"/>
+				<imageExpression><![CDATA[$P{LOGO_TCE}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="145" y="45" width="660" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome_ug}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="145" y="1" width="660" height="44"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="23" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RELATÓRIO DE VACÂNCIA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<detail>
+		<band height="78" splitType="Immediate">
+			<componentElement>
+				<reportElement key="table 1" positionType="Float" x="0" y="26" width="805" height="38" isRemoveLineWhenBlank="true"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Listagem de Vacâncias">
+						<datasetParameter name="COD_UG">
+							<datasetParameterExpression><![CDATA[$P{COD_UG}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="PARAM_COD_ADMISSAO">
+							<datasetParameterExpression><![CDATA[$P{PARAM_COD_ADMISSAO}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="PARAM_COD_CPF">
+							<datasetParameterExpression><![CDATA[$P{PARAM_COD_CPF}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="PARAM_TIPO_VACANCIA">
+							<datasetParameterExpression><![CDATA[$P{PARAM_TIPO_VACANCIA}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="PARAM_NOME">
+							<datasetParameterExpression><![CDATA[$P{PARAM_NOME}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="76">
+						<jr:tableHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="table_CH" x="0" y="0" width="76" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Cód. Vacância]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table_TD" height="18" rowSpan="1">
+							<textField>
+								<reportElement style="table_TD" x="0" y="0" width="76" height="18"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{CodigoVacancia}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="269">
+						<jr:tableHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="table_CH" x="0" y="0" width="269" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Servidor]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table_TD" height="18" rowSpan="1">
+							<textField>
+								<reportElement style="table_TD" x="0" y="0" width="269" height="18"/>
+								<textElement verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[" "+$F{Servidor}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="107">
+						<jr:tableHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="table_CH" x="0" y="0" width="107" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[CPF]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table_TD" height="18" rowSpan="1">
+							<textField>
+								<reportElement style="table_TD" x="0" y="0" width="107" height="18"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{CPF}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="79">
+						<jr:tableHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="table_CH" x="0" y="0" width="79" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Matrícula]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table_TD" height="18" rowSpan="1">
+							<textField>
+								<reportElement style="table_TD" x="0" y="0" width="79" height="18"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{Matricula}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="97">
+						<jr:tableHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="table_CH" x="0" y="0" width="97" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Tipo Vacância]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table_TD" height="18" rowSpan="1">
+							<textField>
+								<reportElement style="table_TD" x="0" y="0" width="97" height="18"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{TipoVacancia}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="104">
+						<jr:tableHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="table_CH" x="0" y="0" width="104" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Data Vacância]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table_TD" height="18" rowSpan="1">
+							<textField>
+								<reportElement style="table_TD" x="0" y="0" width="104" height="18"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{DataVacancia}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="73">
+						<jr:tableHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement style="table_CH" x="0" y="0" width="73" height="20"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Status]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table_TD" height="18" rowSpan="1">
+							<textField>
+								<reportElement style="table_TD" x="0" y="0" width="73" height="18"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{Situacao}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="0" y="5" width="805" height="21" isRemoveLineWhenBlank="true" forecolor="#FFFFFF" backcolor="#3862A5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11" isBold="true" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[ LISTA DE VACÂNCIAS ENVIADAS:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="18">
+			<textField isBlankWhenNull="false">
+				<reportElement positionType="Float" mode="Transparent" x="0" y="0" width="465" height="18" isRemoveLineWhenBlank="true"/>
+				<textElement verticalAlignment="Bottom" markup="none">
+					<font size="9" isBold="false" isItalic="false" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["   SICAP - Data/Hora geração: "+$P{DATA_HORA_GERACAO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="695" y="0" width="80" height="18"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="775" y="0" width="30" height="18"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
